@@ -23,6 +23,15 @@ $(document).ready(function () {
             $(".div_right").animate({ width: "1313" }, "slow");
         }
     });
+
+    //获取当前url，如果有#请求的页面，则跳转#号后地址
+    var url = window.location.href;
+    var length = url.indexOf("#");
+    if (length > 0) {
+        var gotoUrl = url.substring(length + 1);
+        //此处需要利用ajax，根据gotoUrl获取当前模块具体信息，调用下面方法
+        Navigation("aaa", "bbbb", gotoUrl, "ccc");
+    }
 });
 function InitPage() {
     if (GlobalObj.page == null) {
@@ -49,7 +58,7 @@ var GlobalObj =
                 $("#WidgetColumn").append("<li id=\"li_wc_" + obj.id + "\"></li>");
                 $("#li_wc_" + obj.id).load(obj.url);
 
-                var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','"+obj.url+"')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
+                var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
                 $(".div_foot").append(div);
                 this.pages.push(obj);
             }
@@ -87,16 +96,24 @@ function Navigation(id, name, url, image) {
     page.url = url;
     page.image = image;
     GlobalObj.AddPage(page);
-    history.pushState(null, "123", url);
+    try {
+        history.pushState(null, "123", url);
+    } catch (e) {
+
+    }
 }
 
 function ItemClose(name, url) {
     GlobalObj.RemovePage(name, url);
 }
 
-function ShowThis(id,url) {
+function ShowThis(id, url) {
     var liId = "li_wc_" + id;
     $("li[id*='li_wc_']").hide();
     $("#" + liId).show();
-    history.pushState(null, "123", url);
+    try {
+        history.pushState(null, "123", url);
+    } catch (e) {
+
+    }
 }

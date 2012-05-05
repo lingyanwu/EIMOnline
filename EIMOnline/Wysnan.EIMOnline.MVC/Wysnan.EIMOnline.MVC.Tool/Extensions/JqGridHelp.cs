@@ -113,6 +113,7 @@ namespace Wysnan.EIMOnline.Tool.JqGridExtansions
             grid.AppendFormat("caption: '&nbsp;{0}',", jqGrid._Caption);
             grid.AppendFormat("postData:{{showFiled:'{0}'}},", StrShowField.ToString());
             //grid.AppendFormat("beforeSelectRow:function(rowid, e){{this.getCell(  Navigation('{0}','{1}','{2}//'+rowid,'{3}');}}", "edit", "edit", urlView, "image");
+            grid.AppendFormat("onCellSelect:function(rowid,iCol){{if(iCol!=0){{Navigation('view'+rowid,'{0}','{1}'+'/'+rowid,'{2}')}}}}", "view", urlView, "image");
             grid.Append("});");
             grid.AppendFormat("var grid=$(\"#{0}\");", list);
             grid.AppendFormat("grid.jqGrid('navGrid', '#{0}', {{ edit: false, add: false, del: false,view:false }},{{}},{{}},{{}},{{multipleSearch:true,overlay:false,closeAfterSearch:true,closeOnEscape:true}})", pager);

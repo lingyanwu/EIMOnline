@@ -39,10 +39,6 @@ namespace Wysnan.EIMOnline.MVC.Controllers
                 type = typeof(E);
                 string typeName = type.Name + "Model";
                 Model = GlobalEntity.Instance.ApplicationContext.GetObject(typeName) as T;
-
-                //type = typeof(E);
-                //string typeName = type.Name + "Controller";
-                //Model = GlobalEntity.Instance.ApplicationContext.GetObject(typeName) as T;
             }
             catch (Exception ex)
             {
@@ -51,7 +47,7 @@ namespace Wysnan.EIMOnline.MVC.Controllers
             }
         }
 
-        
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (SystemEntity.CurrentSecurityUser == null)
@@ -64,6 +60,18 @@ namespace Wysnan.EIMOnline.MVC.Controllers
                 return;
             }
             base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnResultExecuted(ResultExecutedContext filterContext)
+        {
+            base.OnResultExecuted(filterContext);
+            //页面输出脚本，判断是否包含主框架页面，如果不包含，则跳转到首页，跳转路径如：index/index/#当前请求页面。
+            //最终由总框架页面（js代码）判断是否有--#请求页面--，如果有的话，则在首页跳转请求页面。
+            bool isAjax = filterContext.HttpContext.Request.IsAjaxRequest();
+            if (!isAjax)
+            {
+                filterContext.HttpContext.Response.Output.Write("<script>var div_all = document.getElementById('div_all');if (div_all == null) {window.location.href = '/#' + window.location.href;}</script>");
+            }
         }
 
         #region Action
@@ -182,7 +190,7 @@ namespace Wysnan.EIMOnline.MVC.Controllers
         }
         #endregion
 
-      
+
 
         #region Privte Methods
 

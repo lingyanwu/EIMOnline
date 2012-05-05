@@ -16,7 +16,7 @@ namespace Wysnan.EIMOnline.MVC.Controllers
         //
         // GET: /Index/
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             return View();
         }
