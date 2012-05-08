@@ -14,10 +14,5 @@ namespace Wysnan.EIMOnline.Business
             var tt = Model.List<SecurityRole>();
             
         }
-
-        public IQueryable<CombinedSecurityUserRole> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

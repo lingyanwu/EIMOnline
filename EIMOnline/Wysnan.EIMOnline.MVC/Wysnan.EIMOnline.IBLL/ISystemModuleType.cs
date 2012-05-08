@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISystemModuleType : IBusinessLogicModel<SystemModuleType>, IBusinessLogicModelEx<CombinedSystemModuleType>
+    public interface ISystemModuleType : IBusinessLogicModel<SystemModuleType>
     {
         
     }

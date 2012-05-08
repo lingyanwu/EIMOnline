@@ -9,9 +9,5 @@ namespace Wysnan.EIMOnline.Business
     public class SystemModuleTypeModel : GenericBusinessModel<SystemModuleType>, ISystemModuleType
     {
 
-        public IQueryable<CombinedSystemModuleType> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

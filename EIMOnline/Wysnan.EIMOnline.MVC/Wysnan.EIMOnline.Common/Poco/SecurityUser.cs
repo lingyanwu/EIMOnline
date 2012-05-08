@@ -24,8 +24,9 @@ namespace Wysnan.EIMOnline.Common.Poco
 
         public SecurityUser()
         {
-            //this.OperateLogs = new List<OperateLog>();
-            //this.SecurityUserRoles = new List<SecurityUserRole>();
+            this.OperateLogs = new List<OperateLog>();
+            this.SecurityUserRoles = new List<SecurityUserRole>();
+            this.PersonnelAttendances = new List<PersonnelAttendance>();
         }
         public DateTime CreatedOn { get; set; }
 

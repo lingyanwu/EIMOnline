@@ -209,6 +209,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="InstallationDeploy.txt" />
+    <Content Include="Scripts\menuajax.js" />
     <Content Include="Scripts\external\jquery.bgiframe-2.1.2.js" />
     <Content Include="Scripts\external\jquery.cookie.js" />
     <Content Include="Scripts\external\jquery.metadata.js" />
@@ -460,6 +461,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Shared\_DetailView.cshtml" />
+    <Content Include="Framework\Ajax\ModuleMenu.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,7 +3,7 @@ using Wysnan.EIMOnline.Common.ViewModel;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISystemPermission : IBusinessLogicModel<SystemPermission>, IBusinessLogicModelEx<CombinedSystemPermission>
+    public interface ISystemPermission : IBusinessLogicModel<SystemPermission>
     {
     }
 }

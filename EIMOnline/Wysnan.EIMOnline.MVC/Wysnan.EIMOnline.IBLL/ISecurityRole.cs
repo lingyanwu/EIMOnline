@@ -7,7 +7,7 @@ using Wysnan.EIMOnline.Common.Poco;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISecurityRole : IBusinessLogicModel<SecurityRole>, IBusinessLogicModelEx<CombinedSecurityRole>
+    public interface ISecurityRole : IBusinessLogicModel<SecurityRole>
     {
     }
 }

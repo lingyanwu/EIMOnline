@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISystemModule : IBusinessLogicModel<SystemModule>, IBusinessLogicModelEx<CombinedSystemModule>
+    public interface ISystemModule : IBusinessLogicModel<SystemModule>
     {
         IQueryable<SystemModule> GetSecuritySystemModule();
 

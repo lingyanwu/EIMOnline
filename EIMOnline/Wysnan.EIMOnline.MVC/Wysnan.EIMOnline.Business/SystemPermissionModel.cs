@@ -15,11 +15,6 @@ namespace Wysnan.EIMOnline.Business
 
         }
 
-        public IQueryable<CombinedSystemPermission> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
-
         [TransactionAttribute]
         public override IQueryable<SystemPermission> List()
         {

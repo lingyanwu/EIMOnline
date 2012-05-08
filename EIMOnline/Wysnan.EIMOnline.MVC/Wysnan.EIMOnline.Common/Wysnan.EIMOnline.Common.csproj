@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,14 +77,6 @@
     <Compile Include="Framework\ISystemBaseEntity.cs" />
     <Compile Include="Framework\PageInfo.cs" />
     <Compile Include="Framework\Result.cs" />
-    <Compile Include="ViewModel\CombinedSecurityRole.cs" />
-    <Compile Include="ViewModel\CombinedSecurityUser.cs" />
-    <Compile Include="ViewModel\CombinedSecurityUserRole.cs" />
-    <Compile Include="ViewModel\CombinedSystemModule.cs" />
-    <Compile Include="ViewModel\CombinedSystemModuleDetailPage.cs" />
-    <Compile Include="ViewModel\CombinedSystemModuleType.cs" />
-    <Compile Include="ViewModel\CombinedSystemPermission.cs" />
-    <Compile Include="ViewModel\CombinedPersonnelAttendance.cs" />
     <Compile Include="ViewModel\ICombined.cs" />
   </ItemGroup>
   <ItemGroup>

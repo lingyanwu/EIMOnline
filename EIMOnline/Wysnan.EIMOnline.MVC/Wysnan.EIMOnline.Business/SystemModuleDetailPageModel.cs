@@ -13,11 +13,6 @@ namespace Wysnan.EIMOnline.Business
 
         }
 
-        public IQueryable<CombinedSystemModuleDetailPage> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IQueryable<SystemModuleDetailPage> List()
         {
             return base.List();

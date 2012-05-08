@@ -13,9 +13,5 @@ namespace Wysnan.EIMOnline.Business
         public SecurityRoleModel()
         {
         }
-        public IQueryable<CombinedSecurityRole> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

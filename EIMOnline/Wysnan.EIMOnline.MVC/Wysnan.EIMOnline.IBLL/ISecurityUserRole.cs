@@ -7,7 +7,7 @@ using Wysnan.EIMOnline.Common.ViewModel;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISecurityUserRole : IBusinessLogicModel<SecurityUserRole>, IBusinessLogicModelEx<CombinedSecurityUserRole>
+    public interface ISecurityUserRole : IBusinessLogicModel<SecurityUserRole>
     {
     }
 }

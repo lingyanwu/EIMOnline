@@ -15,11 +15,6 @@ namespace Wysnan.EIMOnline.Business
         {
         }
 
-        public IQueryable<CombinedSystemModule> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
-
         [TransactionAttribute]
         public override IQueryable<SystemModule> List()
         {

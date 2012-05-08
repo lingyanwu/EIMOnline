@@ -19,8 +19,11 @@ namespace Wysnan.EIMOnline.Common.Poco
         public string RoleName { get; set; }
         public SecurityRole()
         {
-            //this.SecurityUserRoles = new List<SecurityUserRole>();
+            this.SecurityUserRoles = new List<SecurityUserRole>();
+            this.SystemPermissions = new List<SystemPermission>();           
         }
+       
         public virtual ICollection<SecurityUserRole> SecurityUserRoles { get; set; }
+        public virtual ICollection<SystemPermission> SystemPermissions { get; set; }
     }
 }

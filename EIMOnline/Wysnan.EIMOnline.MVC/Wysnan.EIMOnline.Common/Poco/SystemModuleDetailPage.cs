@@ -17,10 +17,11 @@ namespace Wysnan.EIMOnline.Common.Poco
         public string DetailPageAction { get; set; }
         public string DetailPageUrl { get; set; }
         public int ParentID { get; set; }
-        public int SystemModuleID { get; set; }
+        public int? SystemModuleID { get; set; }
 
         public virtual SystemModule SystemModule { get; set; }
 
+     
         public virtual ICollection<SystemPermission> SystemPermissions { get; set; }
     }
 }

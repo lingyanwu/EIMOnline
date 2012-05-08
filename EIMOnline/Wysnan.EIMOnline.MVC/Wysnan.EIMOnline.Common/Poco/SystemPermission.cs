@@ -24,5 +24,6 @@ namespace Wysnan.EIMOnline.Common.Poco
         public virtual SystemModule SystemModule { get; set; }
         public virtual SystemModuleType SystemModuleType { get; set; }
         public virtual SystemModuleDetailPage SystemModuleDetailPage { get; set; }
+        public virtual SecurityRole SecurityRole { get; set; }
     }
 }

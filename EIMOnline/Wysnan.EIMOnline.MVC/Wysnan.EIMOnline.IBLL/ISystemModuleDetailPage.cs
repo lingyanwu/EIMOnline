@@ -3,7 +3,7 @@ using Wysnan.EIMOnline.Common.ViewModel;
 
 namespace Wysnan.EIMOnline.IBLL
 {
-    public interface ISystemModuleDetailPage : IBusinessLogicModel<SystemModuleDetailPage>, IBusinessLogicModelEx<CombinedSystemModuleDetailPage>
+    public interface ISystemModuleDetailPage : IBusinessLogicModel<SystemModuleDetailPage>
     {
     }
 }

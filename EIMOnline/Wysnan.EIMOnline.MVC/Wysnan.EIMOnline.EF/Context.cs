@@ -39,8 +39,11 @@ namespace Wysnan.EIMOnline.EF
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder.Configurations.Add(new SecurityUserMap());
-            modelBuilder.Configurations.Add(new zMetaFormLayoutMap());
-
+            modelBuilder.Configurations.Add(new SystemModuleMap());
+            modelBuilder.Configurations.Add(new SystemModuleTypeMap());
+            modelBuilder.Configurations.Add(new SystemModuleDetailPageMap());
+            modelBuilder.Configurations.Add(new SystemPermissionMap());
+			modelBuilder.Configurations.Add(new zMetaFormLayoutMap());
         }
     }
 }

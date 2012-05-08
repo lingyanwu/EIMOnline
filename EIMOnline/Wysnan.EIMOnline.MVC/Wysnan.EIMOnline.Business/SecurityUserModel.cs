@@ -35,10 +35,5 @@ namespace Wysnan.EIMOnline.Business
         //    var temp = query.Select("New(ID, UserName,UserLoginID,UserLoginPwd,CreatedOn)");
         //    return temp;
         //}
-
-        public IQueryable<CombinedSecurityUser> ListCombined()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
