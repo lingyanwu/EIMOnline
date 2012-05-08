@@ -67,7 +67,7 @@
     <Content Include="Migrations\InitialScript\InitialData.sql" />
     <Content Include="Migrations\InitialScript\Data\InitialDataBase.sql" />
     <Content Include="Migrations\InitialScript\StoredProcedures\Proc_EntityActionURLCreate.sql" />
-    <Content Include="Migrations\InitialScript\StoredProcedures\Proc_InitionViewTab.sql" />
+    <Content Include="Migrations\InitialScript\StoredProcedures\Proc_InitialView.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
