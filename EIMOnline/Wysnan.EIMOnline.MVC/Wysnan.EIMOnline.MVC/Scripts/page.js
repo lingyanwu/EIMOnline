@@ -30,7 +30,9 @@ $(document).ready(function () {
     if (length > 0) {
         var gotoUrl = url.substring(length + 1);
         //此处需要利用ajax，根据gotoUrl获取当前模块具体信息，调用下面方法
-        Navigation("aaa", "bbbb", gotoUrl, "ccc");
+        $.get("/Framework/Ajax/SystemModule.ashx", { typeId: 1, url: gotoUrl }, function (data) {
+            Navigation(data.ID + "_" + data.SMID, data.Title, gotoUrl, gotoUrl);
+        }, "json");
     }
 });
 function InitPage() {
@@ -58,7 +60,7 @@ var GlobalObj =
                 $("#WidgetColumn").append("<li id=\"li_wc_" + obj.id + "\"></li>");
                 $("#li_wc_" + obj.id).load(obj.url);
 
-                var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
+                var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.name + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
                 $(".div_foot").append(div);
                 this.pages.push(obj);
             }
@@ -97,7 +99,7 @@ function Navigation(id, name, url, image) {
     page.image = image;
     GlobalObj.AddPage(page);
     try {
-        history.pushState(null, "123", url);
+        history.pushState(null, name, url);
     } catch (e) {
 
     }
@@ -107,12 +109,12 @@ function ItemClose(name, url) {
     GlobalObj.RemovePage(name, url);
 }
 
-function ShowThis(id, url) {
+function ShowThis(id, name, url) {
     var liId = "li_wc_" + id;
     $("li[id*='li_wc_']").hide();
     $("#" + liId).show();
     try {
-        history.pushState(null, "123", url);
+        history.pushState(null, name, url);
     } catch (e) {
 
     }

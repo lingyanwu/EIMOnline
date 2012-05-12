@@ -748,7 +748,8 @@ $.fn.jqGrid = function( pin ) {
 			groupingView : {groupField:[],groupOrder:[], groupText:[],groupColumnShow:[],groupSummary:[], showSummaryOnHide: false, sortitems:[], sortnames:[], groupDataSorted : false, summary:[],summaryval:[], plusicon: 'ui-icon-circlesmall-plus', minusicon: 'ui-icon-circlesmall-minus'},
 			ignoreCase : false,
 			cmTemplate : {},
-			idPrefix : ""
+			idPrefix : "",
+			saerchTextField: ""
 		}, $.jgrid.defaults, pin || {});
 		var ts= this, grid={
 			headers:[],

@@ -119,10 +119,6 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
             return PartialView("PartialEdit");
         }
 
-        public ActionResult View(int id)
-        {
-            return PartialView("PartialView", id);
-        }
 
         public ActionResult List2()
         {

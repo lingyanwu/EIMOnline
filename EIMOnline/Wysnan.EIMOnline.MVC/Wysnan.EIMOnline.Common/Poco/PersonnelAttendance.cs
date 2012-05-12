@@ -17,11 +17,16 @@ namespace Wysnan.EIMOnline.Common.Poco
         public byte[] TimeStamp { get; set; }
 
         public int SecurityUserID { get; set; }
+        public int SecurityUser2ID { get; set; }
 
         public DateTime BeginWorkTime { get; set; }
 
         public DateTime EndWorkTime { get; set; }
 
         public virtual SecurityUser SecurityUser { get; set; }
+
+        public virtual SecurityUser SecurityUser2 { get; set; }
+
+        public bool IsPunchCard { get; set; }
     }
 }

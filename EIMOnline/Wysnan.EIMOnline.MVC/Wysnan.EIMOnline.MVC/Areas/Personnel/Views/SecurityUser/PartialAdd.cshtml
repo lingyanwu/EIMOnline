@@ -1,20 +1,33 @@
 ﻿添加页面11111111111
-<div style="width: 200px">
-    <div style="text-align: right">
+<div class="SearchableBox">
+    <div class="search_q">
         <span class="spanQ">+</span>
     </div>
-    <div>
-        <input type="text" style="width: 100%" readonly="readonly" /></div>
+    <div class="search_t">
+        <input type="text" readonly="readonly" /></div>
 </div>
 <div id="dialog-modal" title="Basic modal dialog">
     <div id="divSerach">
     </div>
 </div>
 <style>
-    .spanQ:hover
+    .SearchableBox
+    {
+        width: 200px;
+    }
+    .SearchableBox .search_q
+    {
+        text-align: right;
+    }
+    .SearchableBox .search_q spanQ
     {
         border: 1px solid Red;
     }
+    .SearchableBox .search_t text
+    {
+        width: 100%;
+    }
+    
     .ui-dialog-titlebar
     {
         height: 18px;
@@ -38,6 +51,9 @@
         });
     });
     $(".spanQ").click(function () {
-        $("#divSerach").load("http://localhost:8080/Administration/SecurityUser", function () { $("#dialog-modal").dialog("open"); });
+        var cid = $(this).attr("cid");
+        var divSearch = "divSerach_" + cid;
+        var dialogDiv = "dialog_" + cid;
+        $(divSearch).load("http://localhost:8080/Administration/SecurityUser", function () { $(dialogDiv).dialog("open"); });
     });
 </script>

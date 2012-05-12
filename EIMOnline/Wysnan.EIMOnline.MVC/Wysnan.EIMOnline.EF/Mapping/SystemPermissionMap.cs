@@ -7,19 +7,19 @@ namespace Wysnan.EIMOnline.EF.Mapping
     {
         public SystemPermissionMap()
         {
-            this.HasOptional(t => t.SystemModuleType)
+            this.HasRequired(t => t.SystemModuleType)
                 .WithMany(s => s.SystemPermissions)
                 .HasForeignKey(o => o.SystemModuleTypeID);
 
-            this.HasOptional(t => t.SystemModule)
+            this.HasRequired(t => t.SystemModule)
                 .WithMany(s => s.SystemPermissions)
                 .HasForeignKey(o => o.SystemModuleID);
 
-            this.HasOptional(t => t.SystemModuleDetailPage)
+            this.HasRequired(t => t.SystemModuleDetailPage)
                 .WithMany(s => s.SystemPermissions)
                 .HasForeignKey(o => o.SystemModulDatailPageID);
 
-            this.HasOptional(t => t.SecurityRole)
+            this.HasRequired(t => t.SecurityRole)
                 .WithMany(s => s.SystemPermissions)
                 .HasForeignKey(o => o.RoleID);
         }

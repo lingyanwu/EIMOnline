@@ -25,7 +25,6 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
     {
 
         //[Obsolete("由于cookie大小有限制，对于多字段的cookie缓存不适用，弃用这个方法", false)]
-        public static int ModuleTypeId;
         public static MvcHtmlString Grid(this HtmlHelper helper, GridEnum gridEnum)
         {
             SystemEntity systemEntity = HttpContext.Current.Session[ConstEntity.Session_SystemEntity] as SystemEntity;
@@ -89,11 +88,8 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
 
         public static MvcHtmlString Menu(this HtmlHelper helper)
         {
-            //return MvcHtmlString.Empty;
-            ISystemModule systemModuleModel = null;
-            systemModuleModel = GlobalEntity.Instance.ApplicationContext.GetObject("SystemModuleModel") as ISystemModule;
+            IList<SystemModule> systemModules = GlobalEntity.Instance.Cache_SystemModule.SystemModules;
 
-            var systemModules = systemModuleModel.GetSecuritySystemModule();
             if (systemModules == null)
             {
                 return MvcHtmlString.Empty;
@@ -103,17 +99,98 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
             var list = systemModules.ToList();
             foreach (var item in list)
             {
-                menuStr.AppendFormat("<li><a onclick=\"Navigation('{0}','{1}', '{2}', '{3}')\">{1}</a></li>", item.ID, item.ModuleName, item.ModuleMainUrl, "img.jpg");
+                SystemModuleDetailPage systemModuleDetailPage = GlobalEntity.Instance.Cache_SystemModule.GetSystemModuleDetailPage(item);
+                menuStr.AppendFormat("<li><a onclick=\"Navigation('{0}_{1}','{2}', '{3}', '{4}')\">{2}</a></li>", item.ID, systemModuleDetailPage.ID, item.ModuleName, item.ModuleMainUrl, item.ImageUrl);
             }
             menuStr.Append("</ul>");
             return MvcHtmlString.Create(menuStr.ToString());
         }
 
-        public static MvcHtmlString SerachableBox<T,U>(this HtmlHelper<T> helper, Expression<Func<T, U>> expression)
-        {
-            return MvcHtmlString.Empty;
-        } 
+        #region SearchBoxFor控件
 
+        /// <summary>
+        /// SearchBoxFor控件
+        /// </summary>
+        /// <typeparam name="T">泛型参数</typeparam>
+        /// <typeparam name="U">需要加载的属性字段</typeparam>
+        /// <typeparam name="F">关联的属性ID字段</typeparam>
+        /// <param name="helper">泛型参数</param>
+        /// <param name="expression">只能是IBaseEntity类型</param>
+        /// <param name="field">关联的属性ID字段</param>
+        /// <returns></returns>
+        public static MvcHtmlString SearchBoxFor<T, U, F>(this HtmlHelper<T> helper, Expression<Func<T, U>> expression, Expression<Func<T, F>> field)
+            where U : IBaseEntity
+            where F : struct
+        {
+            Type type = typeof(U);
+            var systemModule = GlobalEntity.Instance.Cache_SystemModule.SystemModules.Where(a => a.ControllerModule == type.Name).FirstOrDefault();
+            if (systemModule == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+            Random random = new Random();
+            int id = random.Next(1, 99);
+
+            string lamda = expression.Lamda();
+            string fieldId = field.Lamda();
+
+            string divSearchBoxId = "searchbox" + lamda + id;//控件ID
+            string divSearchId = "divSerach_" + lamda + id;//加载数据ID
+            string dialogDivId = "dialog_" + lamda + id;//弹出页面ID
+            string spanQId = "spanQ_" + lamda + id; //搜索按钮ID
+
+            StringBuilder serachBox = new StringBuilder();
+            serachBox.AppendFormat("<div class=\"SearchableBox\" id=\"{0}\"><div class=\"search_q\"><span class=\"spanQ\" id=\"{1}\">+</span></div><div class=\"search_t\"><input type=\"text\" name=\"t{2}\" readonly=\"readonly\" /><input type=\"hidden\" name=\"{2}\"/></div></div>", divSearchBoxId, spanQId, fieldId);
+            serachBox.AppendFormat("<div class=\"dialog_modal\" id=\"{0}\" title=\"{1}\"><div id=\"{2}\" class=\"dialog_content\"></div></div>", dialogDivId, type.Name, divSearchId);
+            serachBox.AppendFormat("<script type=\"text/javascript\" language=\"javascript\">$(function () {{ $(\"#{0}\").dialog({{ autoOpen: false,height: 500,width: 800,modal: true,resizable: false}});", dialogDivId);
+            serachBox.AppendFormat("$(\"#{0}\").click(function () {{$(\"#{1}\").load(\"{2}\", function () {{ $(\"#{3}\").dialog(\"open\");var jqgrid= $(\"#list\"+$(\"#{1}\").find(\"div[id^='div_jq_']\").attr(\"jqid\"));jqgrid.setGridHeight('365');jqgrid.setGridWidth('840');"
+                + "jqgrid.hideCol(\"cb\");jqgrid.jqGrid('setGridParam',{{onCellSelect:function(rowid,iCol){{$(\"#{4}\").find(\"input[name='t{5}']\").val(jqgrid.getCol(jqgrid.getGridParam('saerchTextField')));$(\"#{4}\").find(\"input[name='{5}']\").val(rowid);$(\"#{3}\").dialog(\"close\");" +
+                "}}}});$(\"#{1}\").find(\"td[id*='GridButton']\").hide();}});}});}});</script>",
+                spanQId, divSearchId, systemModule.ModuleMainUrl, dialogDivId, divSearchBoxId, fieldId);
+            return MvcHtmlString.Create(serachBox.ToString());
+        }
+
+        #endregion
+
+        #region checkBox控件
+        public static MvcHtmlString CheckBoxForIP<T>(this HtmlHelper<T> helper, Expression<Func<T, bool>> expression)
+        {
+            StringBuilder checkBox = new StringBuilder();
+            string field = expression.Lamda();
+            bool value = false;
+
+            if (helper.ViewData != null)
+            {
+                var model = helper.ViewData.ModelMetadata;
+                if (model != null)
+                {
+                    var tempValue = model.Properties.FirstOrDefault(c => c.PropertyName == field).Model;
+                    if (tempValue != null)
+                    {
+                        bool.TryParse(tempValue.ToString(), out value);
+                    }
+                }
+            }
+            checkBox.AppendFormat("<input id=\"{0}\" name=\"{0}\" type=\"checkbox\" {1} value=\"{2}\">", field, value == true ? "checked=\"checked\"" : "", value ? "True" : "False");
+            //checkBox.AppendFormat("<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />", field, value ? "true" : "false");
+            checkBox.AppendFormat("<script type=\"text/javascript\">$(document).ready(function () {{$(\"#{0}\").iphoneStyle({{onChange: function(elem, value) {{ $('#{0}').val(value.toString());}} }});}});</script>", field);
+            return MvcHtmlString.Create(checkBox.ToString());
+        }
+        #endregion
+
+        #region 日期控件
+
+        public static MvcHtmlString DatePickFor<T>(this HtmlHelper<T> helper, Expression<Func<T, DateTime>> expression)
+        {
+            StringBuilder datePick = new StringBuilder();
+            string field = expression.Lamda();
+            datePick.AppendFormat("<input type=\"text\" id=\"{0}\" name=\"{0}\" />", field);
+
+
+            return MvcHtmlString.Empty;
+        }
+
+        #endregion
 
         #region 测试，不缓存
         public delegate MvcHtmlString MvcCacheCallback(HttpContextBase context);

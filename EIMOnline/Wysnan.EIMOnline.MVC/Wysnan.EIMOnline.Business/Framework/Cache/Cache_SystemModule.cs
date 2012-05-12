@@ -73,5 +73,41 @@ namespace Wysnan.EIMOnline.Business.Framework.Cache
         {
             throw new NotImplementedException();
         }
+
+        #region 共有方法
+
+        public SystemModuleDetailPage GetSystemModuleDetailPage(SystemModule systemModule)
+        {
+            return systemModule.SystemModuleDetailPages.Where(a => a.DetailPageUrl == systemModule.ModuleMainUrl).FirstOrDefault();
+        }
+
+        public SystemModuleDetailPage GetSystemModuleDetailPage(SystemModule systemModule, string url)
+        {
+            return systemModule.SystemModuleDetailPages.Where(a => a.DetailPageUrl == url).FirstOrDefault();
+        }
+
+        public SystemModuleDetailPage GetSystemModuleDetailPage(string url)
+        {
+            if (SystemModules == null)
+            {
+                return null;
+            }
+            foreach (var item in this.SystemModules)
+            {
+                if (item.SystemModuleDetailPages != null)
+                {
+                    foreach (var detailPage in item.SystemModuleDetailPages)
+                    {
+                        if (detailPage.DetailPageUrl.Equals(url, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return detailPage;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        #endregion
     }
 }

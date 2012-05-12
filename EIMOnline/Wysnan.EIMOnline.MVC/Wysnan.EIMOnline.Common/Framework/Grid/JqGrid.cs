@@ -117,7 +117,7 @@ namespace Wysnan.EIMOnline.Common.Framework.Grid
         /// </summary>
         public string _Caption { get; set; }
 
-
+        public string SearchBoxField { get; set; }
     }
 
     public class ColModel

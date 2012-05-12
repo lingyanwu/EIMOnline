@@ -21,7 +21,6 @@ namespace Wysnan.EIMOnline.Common.Poco
 
         public virtual SystemModule SystemModule { get; set; }
 
-     
         public virtual ICollection<SystemPermission> SystemPermissions { get; set; }
     }
 }

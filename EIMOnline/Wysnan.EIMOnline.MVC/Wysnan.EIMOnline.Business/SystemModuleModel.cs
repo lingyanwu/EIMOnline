@@ -15,6 +15,8 @@ namespace Wysnan.EIMOnline.Business
         {
         }
 
+        #region 数据库查询
+
         [TransactionAttribute]
         public override IQueryable<SystemModule> List()
         {
@@ -31,7 +33,12 @@ namespace Wysnan.EIMOnline.Business
             return base.List();
         }
 
+        #endregion
 
+        #region 缓存查询
 
+        
+
+        #endregion
     }
 }

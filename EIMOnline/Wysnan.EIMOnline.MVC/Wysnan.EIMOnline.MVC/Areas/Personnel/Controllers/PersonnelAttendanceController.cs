@@ -25,5 +25,23 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
         {
             return PartialView("PartialAdd");
         }
+        [HttpPost]
+        public ActionResult Add(PersonnelAttendance pt)
+        {
+            return PartialView("PartialAdd");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            PersonnelAttendance pt = new PersonnelAttendance();
+            pt.IsPunchCard = false;
+            return PartialView("PartialEdit", pt);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PersonnelAttendance pt)
+        {
+            return PartialView("PartialEdit");
+        }
     }
 }

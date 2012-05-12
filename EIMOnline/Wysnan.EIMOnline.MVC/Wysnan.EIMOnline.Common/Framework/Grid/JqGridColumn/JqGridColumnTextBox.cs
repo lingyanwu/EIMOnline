@@ -77,7 +77,10 @@ namespace Wysnan.EIMOnline.Common.Framework.Grid.JqGridColumn
         /// 只读，不可配置
         /// </summary>
         public string Type { get; private set; }
+
         #endregion
+
+
 
     }
 }

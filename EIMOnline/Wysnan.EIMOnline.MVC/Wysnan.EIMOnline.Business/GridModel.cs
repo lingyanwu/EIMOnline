@@ -33,6 +33,7 @@ namespace Wysnan.EIMOnline.Business
                 RowNum = 10,
                 SortName = "ID",
                 SortOrder = "desc",
+                SearchBoxField = "UserName"
             };
             var columns = new GridColumnCollection()
             {

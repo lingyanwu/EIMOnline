@@ -1,9 +1,14 @@
 ﻿/// <reference path="/Scripts/jquery-1.7.2.min.js" />
 $(document).ready(function () {
     datePick = function (elem) {
-        jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
+        jQuery(elem).datepicker({
+            // jQuery(elem).datetimepicker({ 
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'hh:mm:ss', //格式化时间
+            stepHour: 1, //设置步长
+            stepMinute: 1
+        });
     }
-    
 });
 function persist(grid) {
     var colModel = grid.getGridParam('colModel');

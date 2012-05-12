@@ -38,7 +38,7 @@ namespace Wysnan.EIMOnline.EF
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            modelBuilder.Configurations.Add(new SecurityUserMap());
+
             modelBuilder.Configurations.Add(new SystemModuleMap());
             modelBuilder.Configurations.Add(new SystemModuleTypeMap());
             modelBuilder.Configurations.Add(new SystemModuleDetailPageMap());

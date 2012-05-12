@@ -6,6 +6,5 @@ namespace Wysnan.EIMOnline.IBLL
 {
     public interface ISystemModuleType : IBusinessLogicModel<SystemModuleType>
     {
-        
     }
 }

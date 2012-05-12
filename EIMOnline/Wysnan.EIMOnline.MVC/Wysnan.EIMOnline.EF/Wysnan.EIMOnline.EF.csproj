@@ -49,12 +49,24 @@
     <Compile Include="Context.cs" />
     <Compile Include="EntityFrameworkModel.cs" />
     <Compile Include="Mapping\OperateLogMap.cs" />
-    <Compile Include="Mapping\SecurityUserMap.cs" />
     <Compile Include="Mapping\SystemModuleDetailPageMap.cs" />
     <Compile Include="Mapping\SystemModuleMap.cs" />
     <Compile Include="Mapping\SystemModuleTypeMap.cs" />
     <Compile Include="Mapping\SystemPermissionMap.cs" />
     <Compile Include="Mapping\zMetaFormLayoutMap.cs" />
+    <Compile Include="MigrationsHelp.cs" />
+    <Compile Include="Migrations\201205080644155_InitialData.cs" />
+    <Compile Include="Migrations\201205080644155_InitialData.Designer.cs">
+      <DependentUpon>201205080644155_InitialData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201205100315049_test.cs" />
+    <Compile Include="Migrations\201205100315049_test.Designer.cs">
+      <DependentUpon>201205100315049_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201205110224221_PersonnelAttendance.cs" />
+    <Compile Include="Migrations\201205110224221_PersonnelAttendance.Designer.cs">
+      <DependentUpon>201205110224221_PersonnelAttendance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

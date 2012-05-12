@@ -78,13 +78,10 @@ namespace Wysnan.EIMOnline.Business
         {
             return Model.List<T>().Where(a => a.SystemStatus.HasValue && a.SystemStatus == (int)SystemStatus.Active);
         }
-        public virtual IQueryable<T> List<U>(params Expression<Func<T, U>>[] includeProperty)
+        public virtual IQueryable<T> List<U>(Expression<Func<T, U>> includeProperty)
         {
             IQueryable<T> query = null;
-            foreach (var item in includeProperty)
-            {
-                query = Model.List<T, U>(item);
-            }
+            query = Model.List<T, U>(includeProperty);
             return query;
         }
 

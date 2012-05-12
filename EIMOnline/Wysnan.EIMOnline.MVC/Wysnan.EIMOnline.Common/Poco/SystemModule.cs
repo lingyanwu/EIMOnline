@@ -22,7 +22,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         public string ModuleName { get; set; }
         public int SortOrder { get; set; }
         public string ModuleMainUrl { get; set; }
-
+        public string ImageUrl { get; set; }
         public int? ModuleTypeId { get; set; }
 
         public virtual SystemModuleType ModuleType { get; set; }
