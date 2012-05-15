@@ -10,6 +10,7 @@ namespace Wysnan.EIMOnline.IBLL
         IQueryable<SystemModule> GetSecuritySystemModule();
 
         IQueryable<SystemModule> GetAllSystemModule_Greedy();
+
         #endregion
     }
 }

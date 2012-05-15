@@ -14,7 +14,8 @@ BEGIN
 	DECLARE @RoleId INT
 	DECLARE @ModuleName INT
 	--Add SystemModule
-	SELECT TOP 1 @ModuleName= ID FROM dbo.SystemModule WHERE ModuleName=@ControllerName
+	SELECT TOP 1 @ModuleName= ID FROM dbo.SystemModule WHERE ModuleMainUrl LIKE '%/'+@Area+'/'+@ControllerName+'/%' 
+	--ModuleName=@ControllerName
 	IF @ModuleName IS NULL
 	BEGIN	
 	SELECT @SortOrder=MAX(SortOrder) FROM dbo.SystemModule WHERE ControllerModule=@ControllerName
@@ -45,14 +46,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'Index', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)	
-	          0,        
 	          @SystemModelID -- SystemModuleID - int
 	        )
 	SET @ModuleMainUrl = '/' + @Area + '/' + @ControllerName + '/' + 'List'
@@ -62,14 +61,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'List', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)	 
-	          0,       
 	          @SystemModelID -- SystemModuleID - int
 	        )
 	        
@@ -80,14 +77,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'Add', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)	 
-	          0,       
 	          @SystemModelID -- SystemModuleID - int
 	        )
 	        
@@ -98,14 +93,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'Edit', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)	   
-	          0,     
 	          @SystemModelID -- SystemModuleID - int
 	        )
 	  
@@ -116,14 +109,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'View', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)
-	          0,       
 	          @SystemModelID -- SystemModuleID - int
 	        )  
 	            
@@ -134,14 +125,12 @@ BEGIN
 	          DetailPageTitle ,
 	          DetailPageAction ,
 	          DetailPageUrl ,
-	          ParentID,
 	          SystemModuleID
 	        )
 	VALUES  ( 0 , -- SystemStatus - tinyint	         
 	          @ControllerName, -- DetailPageTitle - nvarchar(max)
 			  N'Delete', -- DetailPageAction - nvarchar(max)
 	          @ModuleMainUrl , -- DetailPageUrl - nvarchar(max)	   
-	          0,     
 	          @SystemModelID -- SystemModuleID - int
 	        )	   
 	SELECT TOP 1 @RoleID= ID FROM dbo.SecurityRole WHERE RoleName='admin'

@@ -172,7 +172,6 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
                 }
             }
             checkBox.AppendFormat("<input id=\"{0}\" name=\"{0}\" type=\"checkbox\" {1} value=\"{2}\">", field, value == true ? "checked=\"checked\"" : "", value ? "True" : "False");
-            //checkBox.AppendFormat("<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />", field, value ? "true" : "false");
             checkBox.AppendFormat("<script type=\"text/javascript\">$(document).ready(function () {{$(\"#{0}\").iphoneStyle({{onChange: function(elem, value) {{ $('#{0}').val(value.toString());}} }});}});</script>", field);
             return MvcHtmlString.Create(checkBox.ToString());
         }

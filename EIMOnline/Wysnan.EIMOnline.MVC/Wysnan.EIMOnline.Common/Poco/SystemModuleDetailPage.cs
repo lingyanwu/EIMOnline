@@ -16,7 +16,6 @@ namespace Wysnan.EIMOnline.Common.Poco
         public string DetailPageTitle { get; set; }
         public string DetailPageAction { get; set; }
         public string DetailPageUrl { get; set; }
-        public int ParentID { get; set; }
         public int? SystemModuleID { get; set; }
 
         public virtual SystemModule SystemModule { get; set; }

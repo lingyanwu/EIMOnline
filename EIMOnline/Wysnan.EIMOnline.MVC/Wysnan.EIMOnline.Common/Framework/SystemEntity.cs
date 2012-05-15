@@ -20,5 +20,11 @@ namespace Wysnan.EIMOnline.Common.Framework
             get;
             set;
         }
+
+        public string CurrentArea
+        {
+            get;
+            set;
+        }
     }
 }

@@ -54,8 +54,9 @@ namespace Wysnan.EIMOnline.MVC
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception unhandledException = Server.GetLastError();
+
             // string errorMessager = unhandledException.InnerException.Message.ToString();
-            
+
             //1 将错误写入日志
             //2 将错误用Html格式发送邮件
 

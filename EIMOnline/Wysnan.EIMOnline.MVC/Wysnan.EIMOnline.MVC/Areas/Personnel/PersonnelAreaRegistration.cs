@@ -17,7 +17,7 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel
             context.MapRoute(
                 "Personnel_default",
                 "Personnel/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { area = "Personnel", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

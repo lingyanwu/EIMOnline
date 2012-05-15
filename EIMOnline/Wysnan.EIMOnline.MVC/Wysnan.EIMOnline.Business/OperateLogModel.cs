@@ -20,6 +20,7 @@ namespace Wysnan.EIMOnline.Business
         {
             var oplog = Model.Add<OperateLog>(t);
 
+
             return oplog;
         }
 

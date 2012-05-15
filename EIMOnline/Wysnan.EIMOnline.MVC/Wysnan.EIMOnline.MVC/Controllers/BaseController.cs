@@ -18,6 +18,7 @@ using Wysnan.EIMOnline.Tool.JqGridExtansions;
 using Wysnan.EIMOnline.Common.Poco;
 using System.Web.Routing;
 using Wysnan.EIMOnline.Business;
+using System.Web;
 
 namespace Wysnan.EIMOnline.MVC.Controllers
 {
@@ -72,6 +73,9 @@ namespace Wysnan.EIMOnline.MVC.Controllers
             {
                 filterContext.HttpContext.Response.Output.Write("<script>var div_all = document.getElementById('div_all');if (div_all == null) {window.location.href = '/#' + window.location.href;}</script>");
             }
+            //设置当前Area
+            var routingValues = RouteTable.Routes.GetRouteData(new HttpContextWrapper(System.Web.HttpContext.Current)).Values;
+            this.SystemEntity.CurrentArea = (string)routingValues["area"] ?? string.Empty;
         }
 
         #region Action

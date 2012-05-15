@@ -94,6 +94,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Framework\Ajax\SystemModule.ashx.cs">
       <DependentUpon>SystemModule.ashx</DependentUpon>
     </Compile>
@@ -139,17 +140,16 @@
     <Content Include="Areas\Personnel\Views\SecurityUser\PartialView.cshtml" />
     <Content Include="Areas\Personnel\Views\PersonnelAttendance\PartialAdd.cshtml" />
     <Content Include="Areas\Personnel\Views\PersonnelAttendance\PartialEdit.cshtml" />
-    <Content Include="Widget\Menu_horizontal\css\MenuMatic-ie6.css" />
-    <Content Include="Widget\Menu_horizontal\css\MenuMatic.css" />
-    <Content Include="Widget\Menu_horizontal\css\style.css" />
-    <Content Include="Widget\Menu_horizontal\img\arrow_down.gif" />
-    <Content Include="Widget\Menu_horizontal\img\arrow_down_over.gif" />
-    <Content Include="Widget\Menu_horizontal\img\arrow_right.gif" />
-    <Content Include="Widget\Menu_horizontal\img\arrow_right_over.gif" />
-    <Content Include="Widget\Menu_horizontal\img\bg.jpg" />
-    <Content Include="Widget\Menu_horizontal\img\logo.gif" />
-    <Content Include="Widget\Menu_horizontal\index.htm" />
-    <Content Include="Widget\Menu_horizontal\js\MenuMatic_0.68.3.js" />
+    <Content Include="Widget\Menu_vertical\css\superfish-navbar.css" />
+    <Content Include="Widget\Menu_vertical\css\superfish-vertical.css" />
+    <Content Include="Widget\Menu_vertical\css\superfish.css" />
+    <Content Include="Widget\Menu_vertical\example.html" />
+    <Content Include="Widget\Menu_vertical\images\arrows-ffffff.png" />
+    <Content Include="Widget\Menu_vertical\images\shadow.png" />
+    <Content Include="Widget\Menu_vertical\js\hoverIntent.js" />
+    <Content Include="Widget\Menu_vertical\js\jquery.bgiframe.min.js" />
+    <Content Include="Widget\Menu_vertical\js\superfish.js" />
+    <Content Include="Widget\Menu_vertical\js\supersubs.js" />
     <None Include="Config\Message.config" />
     <Content Include="Config\FileDependency2.xml" />
     <Content Include="Config\FileDependency1.txt" />
@@ -511,7 +511,6 @@
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Shared\_DetailView.cshtml" />
     <Content Include="Framework\Ajax\SystemModule.ashx" />
-    <None Include="Widget\Menu_horizontal\img\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

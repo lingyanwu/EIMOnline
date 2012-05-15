@@ -22,12 +22,6 @@ namespace Wysnan.EIMOnline.Common.Poco
 
         public string UserLoginPwd { get; set; }
 
-        public SecurityUser()
-        {
-            this.OperateLogs = new List<OperateLog>();
-            this.SecurityUserRoles = new List<SecurityUserRole>();
-            this.PersonnelAttendances = new List<PersonnelAttendance>();
-        }
         public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<OperateLog> OperateLogs { get; set; }

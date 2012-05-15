@@ -31,11 +31,28 @@ INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [U
 SET IDENTITY_INSERT [dbo].[SecurityUser] OFF
 END
 
-----插入测试模块
---IF NOT EXISTS (SELECT ID FROM [SystemModule] WHERE id=1)
---begin
---SET IDENTITY_INSERT [dbo].[SystemModule] ON
---INSERT [dbo].[SystemModule] ([ID], [SystemStatus], [ControllerModule], [ModuleName], [SortOrder], [ModuleMainUrl], [ModuleTypeId]) VALUES (1, 0, N'SecurityUser', N'用户', 1, N'/Administration/SecurityUser', 1)
---INSERT [dbo].[SystemModule] ([ID], [SystemStatus], [ControllerModule], [ModuleName], [SortOrder], [ModuleMainUrl], [ModuleTypeId]) VALUES (1, 0, N'SecurityUser', N'用户', 1, N'/Administration/SecurityUser', 1)
---SET IDENTITY_INSERT [dbo].[SystemModule] OFF
---END
+--插入考勤管理
+IF NOT EXISTS (SELECT ID FROM PersonnelAttendance)
+BEGIN
+SET IDENTITY_INSERT [dbo].PersonnelAttendance ON
+INSERT INTO dbo.PersonnelAttendance
+        ( [ID],
+          SystemStatus ,
+          SecurityUserID ,
+          SecurityUser2ID ,
+          BeginWorkTime ,
+          EndWorkTime ,
+          IsPunchCard ,
+          SecurityUser_ID
+        )
+VALUES  ( 1,
+		  0 , -- SystemStatus - tinyint
+          1 , -- SecurityUserID - int
+          1 , -- SecurityUser2ID - int
+          '2012-05-15 02:32:05' , -- BeginWorkTime - datetime
+          '2012-05-15 02:32:05' , -- EndWorkTime - datetime
+          1 , -- IsPunchCard - bit
+          1  -- SecurityUser_ID - int
+        )
+SET IDENTITY_INSERT [dbo].PersonnelAttendance OFF
+END

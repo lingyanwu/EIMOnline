@@ -49,14 +49,14 @@ body
 }
 .div_left
 {
-    width: 250px;
+    width: 170px;
     height: 720px;
     background-color: #666666;
     float: left;
 }
 .div_right
 {
-    width: 1313px;
+    width: 1393px;
     height: 700px;
     background-color: #C0C0C0;
     float: left;

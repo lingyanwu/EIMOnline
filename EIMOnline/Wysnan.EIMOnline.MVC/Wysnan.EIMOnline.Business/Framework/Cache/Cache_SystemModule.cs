@@ -59,7 +59,7 @@ namespace Wysnan.EIMOnline.Business.Framework.Cache
             objModel = CacheModel.GetCache(CacheKey);
             if (objModel == null)
             {
-                objModel = SystemModuleModel.GetAllSystemModule_Greedy().ToList();
+                objModel = SystemModuleModel.GetAllSystemModule_Greedy().Where(a => a.ParentSystemModuleID == null).ToList();
                 if (objModel != null)
                 {
                     Type t = typeof(Wysnan.EIMOnline.Common.Poco.SystemModule);
@@ -108,6 +108,15 @@ namespace Wysnan.EIMOnline.Business.Framework.Cache
             return null;
         }
 
+        /// <summary>
+        /// 根据区域获取模块
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public IList<SystemModule> GetAllSystemModuleByArea(string area)
+        {
+            return SystemModules.Where(a => a.ModuleType.Area.Equals(area, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 namespace Wysnan.EIMOnline.EF.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitialData : DbMigration
     {
         public override void Up()
@@ -19,7 +19,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "OperateLog",
                 c => new
@@ -34,7 +34,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserId)
                 .Index(t => t.SecurityUserId);
-            
+
             CreateTable(
                 "SecurityUserRole",
                 c => new
@@ -50,7 +50,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("SecurityRole", t => t.SecurityRoleID)
                 .Index(t => t.SecurityUserID)
                 .Index(t => t.SecurityRoleID);
-            
+
             CreateTable(
                 "SecurityRole",
                 c => new
@@ -61,7 +61,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         RoleName = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "SystemPermission",
                 c => new
@@ -83,7 +83,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .Index(t => t.SystemModuleTypeID)
                 .Index(t => t.SystemModulDatailPageID)
                 .Index(t => t.RoleID);
-            
+
             CreateTable(
                 "SystemModule",
                 c => new
@@ -97,11 +97,14 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         ModuleMainUrl = c.String(maxLength: 100),
                         ImageUrl = c.String(),
                         ModuleTypeId = c.Int(),
+                        ParentSystemModuleID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SystemModuleType", t => t.ModuleTypeId)
-                .Index(t => t.ModuleTypeId);
-            
+                .ForeignKey("SystemModule", t => t.ParentSystemModuleID)
+                .Index(t => t.ModuleTypeId)
+                .Index(t => t.ParentSystemModuleID);
+
             CreateTable(
                 "SystemModuleType",
                 c => new
@@ -114,7 +117,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         SortOrder = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "SystemModuleDetailPage",
                 c => new
@@ -125,13 +128,12 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         DetailPageTitle = c.String(maxLength: 30),
                         DetailPageAction = c.String(maxLength: 20),
                         DetailPageUrl = c.String(maxLength: 100),
-                        ParentID = c.Int(nullable: false),
                         SystemModuleID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SystemModule", t => t.SystemModuleID)
                 .Index(t => t.SystemModuleID);
-            
+
             CreateTable(
                 "PersonnelAttendance",
                 c => new
@@ -140,13 +142,20 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         SystemStatus = c.Byte(),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         SecurityUserID = c.Int(nullable: false),
+                        SecurityUser2ID = c.Int(nullable: false),
                         BeginWorkTime = c.DateTime(nullable: false),
                         EndWorkTime = c.DateTime(nullable: false),
+                        IsPunchCard = c.Boolean(nullable: false),
+                        SecurityUser_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserID)
-                .Index(t => t.SecurityUserID);
-            
+                .ForeignKey("SecurityUser", t => t.SecurityUser2ID)
+                .ForeignKey("SecurityUser", t => t.SecurityUser_ID)
+                .Index(t => t.SecurityUserID)
+                .Index(t => t.SecurityUser2ID)
+                .Index(t => t.SecurityUser_ID);
+
             CreateTable(
                 "zMetaFormLayout",
                 c => new
@@ -167,14 +176,17 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID);
 
             MigrationsHelp.InitDB(Sql);
-
             Sql("Exec Proc_InitialView 'SecurityUser'");
+            Sql("Exec Proc_InitialView 'PersonnelAttendance'");
         }
-        
+
         public override void Down()
         {
+            DropIndex("PersonnelAttendance", new[] { "SecurityUser_ID" });
+            DropIndex("PersonnelAttendance", new[] { "SecurityUser2ID" });
             DropIndex("PersonnelAttendance", new[] { "SecurityUserID" });
             DropIndex("SystemModuleDetailPage", new[] { "SystemModuleID" });
+            DropIndex("SystemModule", new[] { "ParentSystemModuleID" });
             DropIndex("SystemModule", new[] { "ModuleTypeId" });
             DropIndex("SystemPermission", new[] { "RoleID" });
             DropIndex("SystemPermission", new[] { "SystemModulDatailPageID" });
@@ -183,8 +195,11 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropIndex("SecurityUserRole", new[] { "SecurityRoleID" });
             DropIndex("SecurityUserRole", new[] { "SecurityUserID" });
             DropIndex("OperateLog", new[] { "SecurityUserId" });
+            DropForeignKey("PersonnelAttendance", "SecurityUser_ID", "SecurityUser");
+            DropForeignKey("PersonnelAttendance", "SecurityUser2ID", "SecurityUser");
             DropForeignKey("PersonnelAttendance", "SecurityUserID", "SecurityUser");
             DropForeignKey("SystemModuleDetailPage", "SystemModuleID", "SystemModule");
+            DropForeignKey("SystemModule", "ParentSystemModuleID", "SystemModule");
             DropForeignKey("SystemModule", "ModuleTypeId", "SystemModuleType");
             DropForeignKey("SystemPermission", "RoleID", "SecurityRole");
             DropForeignKey("SystemPermission", "SystemModulDatailPageID", "SystemModuleDetailPage");

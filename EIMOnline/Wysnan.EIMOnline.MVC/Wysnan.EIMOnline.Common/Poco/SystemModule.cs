@@ -24,10 +24,13 @@ namespace Wysnan.EIMOnline.Common.Poco
         public string ModuleMainUrl { get; set; }
         public string ImageUrl { get; set; }
         public int? ModuleTypeId { get; set; }
+        public int? ParentSystemModuleID { get; set; }
 
         public virtual SystemModuleType ModuleType { get; set; }
+        public virtual SystemModule ParentSystemModule { get; set; }
 
         public virtual ICollection<SystemModuleDetailPage> SystemModuleDetailPages { get; set; }
         public virtual ICollection<SystemPermission> SystemPermissions { get; set; }
+        public virtual ICollection<SystemModule> SystemModules { get; set; }
     }
 }

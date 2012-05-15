@@ -6,6 +6,7 @@ using Wysnan.EIMOnline.Common.Poco;
 using Wysnan.EIMOnline.Business.Framework;
 using System.Text;
 using Wysnan.EIMOnline.Common.Framework;
+using System.Text.RegularExpressions;
 
 namespace Wysnan.EIMOnline.MVC.Framework.Ajax
 {
@@ -73,12 +74,20 @@ namespace Wysnan.EIMOnline.MVC.Framework.Ajax
                 return;
             }
             Uri uri = new Uri(url);
-            SystemModuleDetailPage systemModuleDetailPage = GlobalEntity.Instance.Cache_SystemModule.GetSystemModuleDetailPage(uri.AbsolutePath);
-            if (systemModuleDetailPage != null)
+
+            string pattern = "^(/[a-zA-Z]+){3}";
+            Regex regex = new Regex(pattern);
+            Match match = regex.Match(uri.AbsolutePath);
+            string value = match.Value;
+            if (!string.IsNullOrEmpty(value))
             {
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { ID = systemModuleDetailPage.ID, SMID = systemModuleDetailPage.SystemModule.ID, Title = systemModuleDetailPage.DetailPageTitle });
-                context.Response.ContentType = "text/plain";
-                context.Response.Write(json);
+                SystemModuleDetailPage systemModuleDetailPage = GlobalEntity.Instance.Cache_SystemModule.GetSystemModuleDetailPage(value);
+                if (systemModuleDetailPage != null)
+                {
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { ID = systemModuleDetailPage.ID, SMID = systemModuleDetailPage.SystemModule.ID, Title = systemModuleDetailPage.DetailPageTitle });
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(json);
+                }
             }
         }
 

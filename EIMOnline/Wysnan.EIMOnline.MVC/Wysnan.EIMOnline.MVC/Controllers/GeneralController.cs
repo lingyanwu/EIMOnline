@@ -16,7 +16,5 @@ namespace Wysnan.EIMOnline.MVC.Controllers
         {
             get { return Session[ConstEntity.Session_SystemEntity] == null ? null : Session[ConstEntity.Session_SystemEntity] as SystemEntity; }
         }
-
-
     }
 }

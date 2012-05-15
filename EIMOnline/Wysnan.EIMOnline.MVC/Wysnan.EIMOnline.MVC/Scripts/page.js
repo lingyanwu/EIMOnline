@@ -13,14 +13,14 @@ $(document).ready(function () {
         }
     });
     $("#img_leftSet").click(function () {
-        if ($(".div_left").width() == 250) {
-            $(".div_left").animate({ width: "20"
+        if ($(".div_left").width() == 170) {
+            $(".div_left").animate({ width: "10"
             }, "slow");
-            $(".div_right").animate({ width: "1543" }, "slow");
+            $(".div_right").animate({ width: "1553" }, "slow");
         } else {
-            $(".div_left").animate({ width: "250"
+            $(".div_left").animate({ width: "170"
             }, "slow");
-            $(".div_right").animate({ width: "1313" }, "slow");
+            $(".div_right").animate({ width: "1393" }, "slow");
         }
     });
 
@@ -58,11 +58,19 @@ var GlobalObj =
             if (isExist === false) {
                 $("li[id*='li_wc_']").hide();
                 $("#WidgetColumn").append("<li id=\"li_wc_" + obj.id + "\"></li>");
-                $("#li_wc_" + obj.id).load(obj.url);
+                $("#li_wc_" + obj.id).load(obj.url, function (response, status, xhr) {
+                    if (status == "error") {
+                        alert(response);
+                    }
+                });
+
 
                 var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.name + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
                 $(".div_foot").append(div);
                 this.pages.push(obj);
+            } else {
+                //如果存在，显示这个页面内容
+                ShowThis(obj.id, obj.name, obj.url);
             }
         },
         'RemovePage': function (id) {
