@@ -33,15 +33,14 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
 
         public ActionResult Edit(int id)
         {
-            PersonnelAttendance pt = new PersonnelAttendance();
-            pt.IsPunchCard = false;
+            PersonnelAttendance pt = Model.Get(id);
             return PartialView("PartialEdit", pt);
         }
 
         [HttpPost]
         public ActionResult Edit(PersonnelAttendance pt)
         {
-            return PartialView("PartialEdit");
+            return PartialView("PartialEdit", pt);
         }
     }
 }

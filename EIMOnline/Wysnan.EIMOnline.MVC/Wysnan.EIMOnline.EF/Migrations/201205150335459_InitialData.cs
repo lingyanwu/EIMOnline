@@ -142,19 +142,13 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         SystemStatus = c.Byte(),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         SecurityUserID = c.Int(nullable: false),
-                        SecurityUser2ID = c.Int(nullable: false),
                         BeginWorkTime = c.DateTime(nullable: false),
                         EndWorkTime = c.DateTime(nullable: false),
                         IsPunchCard = c.Boolean(nullable: false),
-                        SecurityUser_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserID)
-                .ForeignKey("SecurityUser", t => t.SecurityUser2ID)
-                .ForeignKey("SecurityUser", t => t.SecurityUser_ID)
-                .Index(t => t.SecurityUserID)
-                .Index(t => t.SecurityUser2ID)
-                .Index(t => t.SecurityUser_ID);
+                .Index(t => t.SecurityUserID);
 
             CreateTable(
                 "zMetaFormLayout",
@@ -182,8 +176,6 @@ namespace Wysnan.EIMOnline.EF.Migrations
 
         public override void Down()
         {
-            DropIndex("PersonnelAttendance", new[] { "SecurityUser_ID" });
-            DropIndex("PersonnelAttendance", new[] { "SecurityUser2ID" });
             DropIndex("PersonnelAttendance", new[] { "SecurityUserID" });
             DropIndex("SystemModuleDetailPage", new[] { "SystemModuleID" });
             DropIndex("SystemModule", new[] { "ParentSystemModuleID" });
@@ -195,8 +187,6 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropIndex("SecurityUserRole", new[] { "SecurityRoleID" });
             DropIndex("SecurityUserRole", new[] { "SecurityUserID" });
             DropIndex("OperateLog", new[] { "SecurityUserId" });
-            DropForeignKey("PersonnelAttendance", "SecurityUser_ID", "SecurityUser");
-            DropForeignKey("PersonnelAttendance", "SecurityUser2ID", "SecurityUser");
             DropForeignKey("PersonnelAttendance", "SecurityUserID", "SecurityUser");
             DropForeignKey("SystemModuleDetailPage", "SystemModuleID", "SystemModule");
             DropForeignKey("SystemModule", "ParentSystemModuleID", "SystemModule");

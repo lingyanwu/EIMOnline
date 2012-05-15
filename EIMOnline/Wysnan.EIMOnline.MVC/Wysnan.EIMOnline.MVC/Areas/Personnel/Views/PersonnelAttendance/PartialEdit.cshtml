@@ -3,7 +3,6 @@
 @using (Html.BeginForm())
 {
     @Html.SearchBoxFor(a => a.SecurityUser, a => a.SecurityUserID)
-    @Html.SearchBoxFor(a => a.SecurityUser2, a => a.SecurityUser2ID)
     @Html.CheckBoxForIP(a => a.IsPunchCard);
     <input type="text" id="txtdatepick" />
     <script type="text/javascript">

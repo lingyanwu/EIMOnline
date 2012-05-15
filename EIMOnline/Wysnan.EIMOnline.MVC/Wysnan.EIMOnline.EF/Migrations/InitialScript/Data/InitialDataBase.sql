@@ -28,6 +28,7 @@ IF NOT EXISTS (SELECT ID FROM [SecurityUser])
 begin
 SET IDENTITY_INSERT [dbo].[SecurityUser] ON
 INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (1, 0, N'zhangsan', N'admin', N'admin', CAST(0x0000A03700000000 AS DateTime))
+INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (1, 0, N'zhangsan2', N'admin2', N'admin2', CAST(0x0000A03700000000 AS DateTime))
 SET IDENTITY_INSERT [dbo].[SecurityUser] OFF
 END
 
@@ -39,20 +40,16 @@ INSERT INTO dbo.PersonnelAttendance
         ( [ID],
           SystemStatus ,
           SecurityUserID ,
-          SecurityUser2ID ,
           BeginWorkTime ,
           EndWorkTime ,
-          IsPunchCard ,
-          SecurityUser_ID
+          IsPunchCard 
         )
 VALUES  ( 1,
 		  0 , -- SystemStatus - tinyint
           1 , -- SecurityUserID - int
-          1 , -- SecurityUser2ID - int
           '2012-05-15 02:32:05' , -- BeginWorkTime - datetime
           '2012-05-15 02:32:05' , -- EndWorkTime - datetime
-          1 , -- IsPunchCard - bit
-          1  -- SecurityUser_ID - int
+          1  -- IsPunchCard - bit
         )
 SET IDENTITY_INSERT [dbo].PersonnelAttendance OFF
 END

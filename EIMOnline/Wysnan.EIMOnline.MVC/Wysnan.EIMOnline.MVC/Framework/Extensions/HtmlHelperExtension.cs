@@ -139,12 +139,44 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
             string dialogDivId = "dialog_" + lamda + id;//弹出页面ID
             string spanQId = "spanQ_" + lamda + id; //搜索按钮ID
 
+            string referenceObjectId = "";      //选择的主键
+            string referenceObjectValue = string.Empty; //选择对象的值
+            if (helper.ViewData != null)
+            {
+                var model = helper.ViewData.ModelMetadata;
+                if (model != null)
+                {
+                    //获取主键
+                    referenceObjectId = model.Properties.FirstOrDefault(c => c.PropertyName == fieldId).Model.ToString();
+                    //todo: 获取引用对象的值(此处用了枚举的类型转换，在以后中可能出现问题，就是jqGrid枚举的定义与poco实体类名不一致，导致查不到真实数据)
+                    GridEnum gridEnum;
+                    bool isOk = Enum.TryParse(lamda, out gridEnum);
+                    if (isOk)
+                    {
+                        JqGrid jqGrid = GlobalEntity.Instance.Cache_JqGrid.JqGrids[gridEnum];
+                        if (jqGrid != null)
+                        {
+                            var referenceObject = model.Properties.FirstOrDefault(c => c.PropertyName == lamda).Model;
+                            if (referenceObject != null)
+                            {
+                                var tempReferenceObjectValue = typeof(U).GetProperty(jqGrid.SearchBoxField).GetValue(referenceObject, null);
+                                if (tempReferenceObjectValue != null)
+                                {
+                                    referenceObjectValue = tempReferenceObjectValue.ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             StringBuilder serachBox = new StringBuilder();
-            serachBox.AppendFormat("<div class=\"SearchableBox\" id=\"{0}\"><div class=\"search_q\"><span class=\"spanQ\" id=\"{1}\">+</span></div><div class=\"search_t\"><input type=\"text\" name=\"t{2}\" readonly=\"readonly\" /><input type=\"hidden\" name=\"{2}\"/></div></div>", divSearchBoxId, spanQId, fieldId);
+            serachBox.AppendFormat("<div class=\"SearchableBox\" id=\"{0}\"><div class=\"search_q\"><span class=\"spanQ\" id=\"{1}\">+</span></div><div class=\"search_t\"><input type=\"text\" name=\"t{2}\" readonly=\"readonly\" value=\"{3}\" /><input type=\"hidden\" name=\"{2}\" value=\"{4}\"/></div></div>", divSearchBoxId, spanQId, fieldId, referenceObjectValue, referenceObjectId);
             serachBox.AppendFormat("<div class=\"dialog_modal\" id=\"{0}\" title=\"{1}\"><div id=\"{2}\" class=\"dialog_content\"></div></div>", dialogDivId, type.Name, divSearchId);
             serachBox.AppendFormat("<script type=\"text/javascript\" language=\"javascript\">$(function () {{ $(\"#{0}\").dialog({{ autoOpen: false,height: 500,width: 800,modal: true,resizable: false}});", dialogDivId);
+
             serachBox.AppendFormat("$(\"#{0}\").click(function () {{$(\"#{1}\").load(\"{2}\", function () {{ $(\"#{3}\").dialog(\"open\");var jqgrid= $(\"#list\"+$(\"#{1}\").find(\"div[id^='div_jq_']\").attr(\"jqid\"));jqgrid.setGridHeight('365');jqgrid.setGridWidth('840');"
-                + "jqgrid.hideCol(\"cb\");jqgrid.jqGrid('setGridParam',{{onCellSelect:function(rowid,iCol){{$(\"#{4}\").find(\"input[name='t{5}']\").val(jqgrid.getCol(jqgrid.getGridParam('saerchTextField')));$(\"#{4}\").find(\"input[name='{5}']\").val(rowid);$(\"#{3}\").dialog(\"close\");" +
+                + "jqgrid.hideCol(\"cb\");jqgrid.jqGrid('setGridParam',{{onCellSelect:function(rowid,iCol){{$(\"#{4}\").find(\"input[name='t{5}']\").val(jqgrid.getCell(rowid,jqgrid.getGridParam('saerchTextField'))); $(\"#{4}\").find(\"input[name='{5}']\").val(jqgrid.getCell(rowid,'ID'));$(\"#{3}\").dialog(\"close\");" +
                 "}}}});$(\"#{1}\").find(\"td[id*='GridButton']\").hide();}});}});}});</script>",
                 spanQId, divSearchId, systemModule.ModuleMainUrl, dialogDivId, divSearchBoxId, fieldId);
             return MvcHtmlString.Create(serachBox.ToString());
