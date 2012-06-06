@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using Wysnan.EIMOnline.Common.Framework.Attributes;
+using Wysnan.EIMOnline.Common.Framework.Enum;
 
 namespace Wysnan.EIMOnline.Common.Poco
 {
@@ -28,5 +30,9 @@ namespace Wysnan.EIMOnline.Common.Poco
         public virtual ICollection<SecurityUserRole> SecurityUserRoles { get; set; }
         public virtual ICollection<PersonnelAttendance> PersonnelAttendances { get; set; }
 
+        public int? TestLookupID { get; set; }
+
+        [LookupAttribute(LookupCodeEnum.UserType)]
+        public virtual Lookup TestLookup { get; set; }
     }
 }

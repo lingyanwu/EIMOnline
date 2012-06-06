@@ -24,6 +24,23 @@ $(document).ready(function () {
         }
     });
 
+    //初始化错误dialog div
+    $("#dialog_error").dialog({
+        autoOpen: false,
+        show: "blind",
+        hide: "blind",
+        position: ['right', 'top'],
+        height: 100,
+        draggable: false,
+        resizable: false,
+        open: function () {
+            setTimeout("$(\"#dialog_error\").dialog(\"close\")", 4000);
+        },
+        create: function (event, ui) {
+            $(".ui-dialog-titlebar").hide();
+        }
+    });
+
     //获取当前url，如果有#请求的页面，则跳转#号后地址
     var url = window.location.href;
     var length = url.indexOf("#");
@@ -60,11 +77,11 @@ var GlobalObj =
                 $("#WidgetColumn").append("<li id=\"li_wc_" + obj.id + "\"></li>");
                 $("#li_wc_" + obj.id).load(obj.url, function (response, status, xhr) {
                     if (status == "error") {
-                        alert(response);
+                        $("#dialog_error").html(response);
+                        $("#dialog_error").dialog("open");
+                        return;
                     }
                 });
-
-
                 var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.name + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
                 $(".div_foot").append(div);
                 this.pages.push(obj);

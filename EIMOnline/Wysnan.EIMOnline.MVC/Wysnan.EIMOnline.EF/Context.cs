@@ -20,7 +20,7 @@ namespace Wysnan.EIMOnline.EF
         public Context(string connectionString)
             : base(connectionString)
         {
-            
+
         }
 
         DbSet<SecurityUser> SecurityUser { get; set; }
@@ -32,6 +32,7 @@ namespace Wysnan.EIMOnline.EF
         DbSet<SystemModuleDetailPage> SystemModuleDetailPage { get; set; }
         DbSet<SystemPermission> SystemPermission { get; set; }
         DbSet<zMetaFormLayout> zMetaFormLayout { get; set; }
+        DbSet<Lookup> Lookup { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,7 +44,7 @@ namespace Wysnan.EIMOnline.EF
             modelBuilder.Configurations.Add(new SystemModuleTypeMap());
             modelBuilder.Configurations.Add(new SystemModuleDetailPageMap());
             modelBuilder.Configurations.Add(new SystemPermissionMap());
-			modelBuilder.Configurations.Add(new zMetaFormLayoutMap());
+            modelBuilder.Configurations.Add(new zMetaFormLayoutMap());
         }
     }
 }

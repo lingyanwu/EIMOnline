@@ -28,7 +28,7 @@ IF NOT EXISTS (SELECT ID FROM [SecurityUser])
 begin
 SET IDENTITY_INSERT [dbo].[SecurityUser] ON
 INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (1, 0, N'zhangsan', N'admin', N'admin', CAST(0x0000A03700000000 AS DateTime))
-INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (1, 0, N'zhangsan2', N'admin2', N'admin2', CAST(0x0000A03700000000 AS DateTime))
+INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (2, 0, N'zhangsan2', N'admin2', N'admin2', CAST(0x0000A03700000000 AS DateTime))
 SET IDENTITY_INSERT [dbo].[SecurityUser] OFF
 END
 

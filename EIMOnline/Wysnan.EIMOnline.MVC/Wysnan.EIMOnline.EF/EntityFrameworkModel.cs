@@ -115,7 +115,7 @@ namespace Wysnan.EIMOnline.EF
                 result.Params = new string[] { typeof(TType).Name, entity.ID.ToString() };
                 return result;
             }
-            if (oldEntity.SystemStatus == (int)SystemStatus.Active)
+            if (oldEntity.SystemStatus == (int)SystemStatus.Deleted)
             {
                 result.MessageCode = "5";
                 result.Params = new string[] { typeof(TType).Name, entity.ID.ToString() };

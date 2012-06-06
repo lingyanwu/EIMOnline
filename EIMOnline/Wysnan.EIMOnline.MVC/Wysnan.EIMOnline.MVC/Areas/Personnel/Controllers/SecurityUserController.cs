@@ -23,7 +23,7 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
 
         public ActionResult Add()
         {
-             return PartialView("PartialAdd");
+            return PartialView("PartialAdd");
         }
 
         public ActionResult Edit()

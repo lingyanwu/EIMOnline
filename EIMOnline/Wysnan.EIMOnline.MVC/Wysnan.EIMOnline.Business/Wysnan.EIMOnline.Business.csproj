@@ -53,6 +53,7 @@
     <Compile Include="Framework\Cache\CacheModel.cs" />
     <Compile Include="Framework\Cache\Cache_SystemModule.cs" />
     <Compile Include="Framework\Cache\Cache_SystemModuleType.cs" />
+    <Compile Include="Framework\Cache\Cache_Lookup.cs" />
     <Compile Include="Framework\GlobalEntity.cs" />
     <Compile Include="Framework\Cache\Cache_JqGrid.cs" />
     <Compile Include="Framework\Cache\Cache_Message.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Framework\SystemInitialization.cs" />
     <Compile Include="GenericBusinessModel.cs" />
     <Compile Include="GridModel.cs" />
+    <Compile Include="LookupModel.cs" />
     <Compile Include="OperateLogModel.cs" />
     <Compile Include="PersonnelAttendanceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

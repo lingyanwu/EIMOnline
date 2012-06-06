@@ -26,7 +26,7 @@ namespace Wysnan.EIMOnline.MVC
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            //routes.IgnoreRoute("{resource}.ashx/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.ashx/{*pathInfo}");
 
             routes.MapRoute(
                 "Default", // Route name
@@ -54,7 +54,6 @@ namespace Wysnan.EIMOnline.MVC
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception unhandledException = Server.GetLastError();
-
             // string errorMessager = unhandledException.InnerException.Message.ToString();
 
             //1 将错误写入日志

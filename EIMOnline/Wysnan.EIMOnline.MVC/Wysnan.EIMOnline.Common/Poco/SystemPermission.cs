@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Wysnan.EIMOnline.Common.Framework.Attributes;
+using Wysnan.EIMOnline.Common.Framework.Enum;
 
 namespace Wysnan.EIMOnline.Common.Poco
 {

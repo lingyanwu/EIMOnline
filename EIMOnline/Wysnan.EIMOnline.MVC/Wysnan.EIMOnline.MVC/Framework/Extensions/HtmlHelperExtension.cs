@@ -18,6 +18,8 @@ using Wysnan.EIMOnline.Business;
 using Spring.Context;
 using Spring.Context.Support;
 using System.Linq.Expressions;
+using System.Reflection;
+using Wysnan.EIMOnline.Common.Framework.Attributes;
 
 namespace Wysnan.EIMOnline.MVC.Framework.Extensions
 {
@@ -73,7 +75,8 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
                     var firstModule = systemModules.Where(a => a.ModuleTypeId == item.ID);
                     if (firstModule != null && firstModule.Count() > 0)
                     {
-                        areasMenuString.AppendFormat("<li id=\"menu_li_{0}\" onclick=\"MenuTypeNavigation({0}, '{1}', '{2}', '{3}')\">{1}</li>", item.ID, item.ModuleTypeName, firstModule.First().ModuleMainUrl, "image");
+                        //areasMenuString.AppendFormat("<li id=\"menu_li_{0}\" onclick=\"return;MenuTypeNavigation({0}, '{1}', '{2}', '{3}')\">{1}</li>", item.ID, item.ModuleTypeName, firstModule.First().ModuleMainUrl, "image");
+                        areasMenuString.AppendFormat("<li id=\"menu_li_{0}\"><a href=\"{2}\">{1}</a></li>", item.ID, item.ModuleTypeName, firstModule.First().ModuleMainUrl, "image");
                     }
                     else
                     {
@@ -147,7 +150,11 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
                 if (model != null)
                 {
                     //获取主键
-                    referenceObjectId = model.Properties.FirstOrDefault(c => c.PropertyName == fieldId).Model.ToString();
+                    var tempeferenceObjectId = model.Properties.FirstOrDefault(c => c.PropertyName == fieldId);
+                    if (tempeferenceObjectId.Model != null)
+                    {
+                        referenceObjectId = tempeferenceObjectId.Model.ToString();
+                    }
                     //todo: 获取引用对象的值(此处用了枚举的类型转换，在以后中可能出现问题，就是jqGrid枚举的定义与poco实体类名不一致，导致查不到真实数据)
                     GridEnum gridEnum;
                     bool isOk = Enum.TryParse(lamda, out gridEnum);
@@ -171,7 +178,7 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
             }
 
             StringBuilder serachBox = new StringBuilder();
-            serachBox.AppendFormat("<div class=\"SearchableBox\" id=\"{0}\"><div class=\"search_q\"><span class=\"spanQ\" id=\"{1}\">+</span></div><div class=\"search_t\"><input type=\"text\" name=\"t{2}\" readonly=\"readonly\" value=\"{3}\" /><input type=\"hidden\" name=\"{2}\" value=\"{4}\"/></div></div>", divSearchBoxId, spanQId, fieldId, referenceObjectValue, referenceObjectId);
+            serachBox.AppendFormat("<div class=\"SearchableBox\" id=\"{0}\"><div class=\"search_q\"><span class=\"spanQ\" id=\"{1}\">+</span></div><div class=\"search_t\"><input type=\"text\" name=\"t{2}\" readonly=\"readonly\" value=\"{3}\" class=\"ui-state-default ui-autocomplete-input ui-widget ui-widget-content ui-corner-left\"/><input type=\"hidden\" name=\"{2}\" value=\"{4}\"/></div></div>", divSearchBoxId, spanQId, fieldId, referenceObjectValue, referenceObjectId);
             serachBox.AppendFormat("<div class=\"dialog_modal\" id=\"{0}\" title=\"{1}\"><div id=\"{2}\" class=\"dialog_content\"></div></div>", dialogDivId, type.Name, divSearchId);
             serachBox.AppendFormat("<script type=\"text/javascript\" language=\"javascript\">$(function () {{ $(\"#{0}\").dialog({{ autoOpen: false,height: 500,width: 800,modal: true,resizable: false}});", dialogDivId);
 
@@ -222,6 +229,93 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
         }
 
         #endregion
+
+        #region 下拉框控件
+
+        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int?>> expression)
+        {
+            Type t = typeof(T);
+            string field = expression.Lamda();
+            PropertyInfo propertyInfo = t.GetProperty(field);
+            if (propertyInfo != null)
+            {
+                foreach (Attribute attr in propertyInfo.GetCustomAttributes(true))
+                {
+                    LookupAttribute lookupAttribute = attr as LookupAttribute;
+                    if (null != lookupAttribute)
+                    {
+                        List<Lookup> lookups = GlobalEntity.Instance.Cache_Lookup.LookupDictionary[lookupAttribute.LookupCode];
+                        if (lookups != null)
+                        {
+                            StringBuilder html = new StringBuilder();
+                            string id = "DropDownList_" + field;
+                            html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
+                            html.Append("<div class=\"ui-widget\">");
+                            html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
+                            foreach (var item in lookups)
+                            {
+                                html.AppendFormat("<option value=\"{0}\">{1}</option>", item.ID, item.Name);
+                            }
+                            html.Append("</select>");
+                            html.Append("</div>");
+                            return MvcHtmlString.Create(html.ToString());
+                        }
+                    }
+                }
+            }
+            return MvcHtmlString.Empty;
+        }
+
+        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression)
+        {
+            Type t = typeof(T);
+            string field = expression.Lamda();
+            PropertyInfo propertyInfo = t.GetProperty(field);
+            if (propertyInfo != null)
+            {
+                foreach (Attribute attr in propertyInfo.GetCustomAttributes(true))
+                {
+                    LookupAttribute lookupAttribute = attr as LookupAttribute;
+                    if (null != lookupAttribute)
+                    {
+                        if (GlobalEntity.Instance.Cache_Lookup.LookupDictionary.ContainsKey(lookupAttribute.LookupCode))
+                        {
+                            List<Lookup> lookups = GlobalEntity.Instance.Cache_Lookup.LookupDictionary[lookupAttribute.LookupCode];
+                            if (lookups != null)
+                            {
+                                StringBuilder html = new StringBuilder();
+                                string id = "DropDownList_" + field;
+                                html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
+                                html.Append("<div class=\"ui-widget\">");
+                                html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
+                                foreach (var item in lookups)
+                                {
+                                    html.AppendFormat("<option value=\"{0}\">{1}</option>", item.ID, item.Name);
+                                }
+                                html.Append("</select>");
+                                html.Append("</div>");
+                                return MvcHtmlString.Create(html.ToString());
+                            }
+                        }
+                        else
+                        {
+                            StringBuilder html = new StringBuilder();
+                            string id = "DropDownList_" + field;
+                            html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
+                            html.Append("<div class=\"ui-widget\">");
+                            html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
+                            html.Append("</select>");
+                            html.Append("</div>");
+                            return MvcHtmlString.Create(html.ToString());
+                        }
+                    }
+                }
+            }
+            return MvcHtmlString.Empty;
+        }
+
+        #endregion
+
 
         #region 测试，不缓存
         public delegate MvcHtmlString MvcCacheCallback(HttpContextBase context);

@@ -45,6 +45,7 @@
     <Compile Include="Framework\IBaseConfigModel.cs" />
     <Compile Include="IBusinessLogicModel.cs" />
     <Compile Include="IEmailServiceModel.cs" />
+    <Compile Include="ILookupModel.cs" />
     <Compile Include="IOperateLog.cs" />
     <Compile Include="IPersonnelAttendanceModel.cs" />
     <Compile Include="ISecurityRole.cs" />

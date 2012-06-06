@@ -85,16 +85,26 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Assets\AssetsAreaRegistration.cs" />
+    <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
+    <Compile Include="Areas\Permissions\Controllers\PersonnelAttendanceController.cs" />
+    <Compile Include="Areas\Permissions\PermissionsAreaRegistration.cs" />
     <Compile Include="Areas\Personnel\PersonnelAreaRegistration.cs" />
-    <Compile Include="Areas\Personnel\Controllers\PersonnelAttendanceController.cs" />
     <Compile Include="Areas\Personnel\Controllers\LogController.cs" />
     <Compile Include="Areas\Personnel\Controllers\SecurityRoleController.cs" />
     <Compile Include="Areas\Personnel\Controllers\SecurityUserController.cs" />
     <Compile Include="Areas\Personnel\Controllers\SecurityUserRoleController.cs" />
+    <Compile Include="Areas\Purchase\PurchaseAreaRegistration.cs" />
+    <Compile Include="Areas\Reimbursement\ReimbursementAreaRegistration.cs" />
+    <Compile Include="Areas\Task\TaskAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Framework\Ajax\UploadFile.ashx.cs">
+      <DependentUpon>UploadFile.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Framework\Ajax\SystemModule.ashx.cs">
       <DependentUpon>SystemModule.ashx</DependentUpon>
     </Compile>
@@ -134,12 +144,17 @@
     <Content Include="Areas\Personnel\Views\SecurityRole\Details.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUserRole\Index.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUserRole\Create.cshtml" />
-    <Content Include="Areas\Personnel\Views\PersonnelAttendance\Index.cshtml" />
+    <Content Include="Areas\Permissions\Views\PersonnelAttendance\Index.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUser\PartialAdd.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUser\PartialEdit.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUser\PartialView.cshtml" />
-    <Content Include="Areas\Personnel\Views\PersonnelAttendance\PartialAdd.cshtml" />
-    <Content Include="Areas\Personnel\Views\PersonnelAttendance\PartialEdit.cshtml" />
+    <Content Include="Areas\Permissions\Views\PersonnelAttendance\PartialAdd.cshtml" />
+    <Content Include="Areas\Permissions\Views\PersonnelAttendance\PartialEdit.cshtml" />
+    <Content Include="Content\controls\UploadFile\Style.css" />
+    <Content Include="Error.htm" />
+    <Content Include="Scripts\DropdownList\DropDownList.js" />
+    <Content Include="Scripts\jquery-1.7.2.js" />
+    <Content Include="Scripts\uploadFile\uploadFile.js" />
     <Content Include="Widget\Menu_vertical\css\superfish-navbar.css" />
     <Content Include="Widget\Menu_vertical\css\superfish-vertical.css" />
     <Content Include="Widget\Menu_vertical\css\superfish.css" />
@@ -150,6 +165,12 @@
     <Content Include="Widget\Menu_vertical\js\jquery.bgiframe.min.js" />
     <Content Include="Widget\Menu_vertical\js\superfish.js" />
     <Content Include="Widget\Menu_vertical\js\supersubs.js" />
+    <Content Include="Areas\Permissions\Views\Web.config" />
+    <Content Include="Areas\Reimbursement\Views\Web.config" />
+    <Content Include="Areas\Purchase\Views\Web.config" />
+    <Content Include="Areas\Inventory\Views\Web.config" />
+    <Content Include="Areas\Assets\Views\Web.config" />
+    <Content Include="Areas\Task\Views\Web.config" />
     <None Include="Config\Message.config" />
     <Content Include="Config\FileDependency2.xml" />
     <Content Include="Config\FileDependency1.txt" />
@@ -511,14 +532,33 @@
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Shared\_DetailView.cshtml" />
     <Content Include="Framework\Ajax\SystemModule.ashx" />
+    <Content Include="Framework\Ajax\UploadFile.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Assets\Controllers\" />
+    <Folder Include="Areas\Assets\Models\" />
+    <Folder Include="Areas\Assets\Views\Shared\" />
+    <Folder Include="Areas\Inventory\Controllers\" />
+    <Folder Include="Areas\Inventory\Models\" />
+    <Folder Include="Areas\Inventory\Views\Shared\" />
+    <Folder Include="Areas\Permissions\Models\" />
+    <Folder Include="Areas\Permissions\Views\Shared\" />
     <Folder Include="Areas\Personnel\Models\" />
     <Folder Include="Areas\Personnel\Views\Shared\" />
+    <Folder Include="Areas\Purchase\Controllers\" />
+    <Folder Include="Areas\Purchase\Models\" />
+    <Folder Include="Areas\Purchase\Views\Shared\" />
+    <Folder Include="Areas\Reimbursement\Controllers\" />
+    <Folder Include="Areas\Reimbursement\Models\" />
+    <Folder Include="Areas\Reimbursement\Views\Shared\" />
+    <Folder Include="Areas\Task\Controllers\" />
+    <Folder Include="Areas\Task\Models\" />
+    <Folder Include="Areas\Task\Views\Shared\" />
     <Folder Include="Content\images\" />
     <Folder Include="ExceptionLog\" />
     <Folder Include="Models\" />
+    <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
