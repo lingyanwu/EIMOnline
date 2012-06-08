@@ -62,6 +62,7 @@
     <Compile Include="Framework\Grid\Poco\SearchOptions.cs" />
     <Compile Include="Framework\MessageEntity.cs" />
     <Compile Include="Framework\SystemEntity.cs" />
+    <Compile Include="Poco\Class1.cs" />
     <Compile Include="Poco\EmailService.cs" />
     <Compile Include="Poco\ErrorInfo.cs" />
     <Compile Include="Poco\IBaseEntity.cs">

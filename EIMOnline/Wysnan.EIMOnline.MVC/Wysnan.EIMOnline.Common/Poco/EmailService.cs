@@ -7,7 +7,7 @@ namespace Wysnan.EIMOnline.Common.Poco
 {
     public class EmailService
     {
-        
+        public int a { get; set; }
 
     }
 }
