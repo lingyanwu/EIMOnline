@@ -91,7 +91,6 @@ namespace Wysnan.EIMOnline.Tool.JqGridExtansions
             grid.AppendFormat("$(\"#{0}\").jqGrid({{", list);
             grid.AppendFormat("url: '{0}',", urlList);// jqGrid._Url);
             grid.Append("autowidth:true,");
-            //grid.Append("setGridWidth:100%,");
             grid.AppendFormat("datatype: '{0}',", jqGrid._DataType);
             grid.AppendFormat("mtype: '{0}',", jqGrid._Mtype);
             grid.AppendFormat("colNames: [{0}],", StrColNames.ToString());
