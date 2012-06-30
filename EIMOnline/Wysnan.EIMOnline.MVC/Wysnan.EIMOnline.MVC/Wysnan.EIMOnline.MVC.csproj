@@ -138,9 +138,7 @@
     <Content Include="Configuration\MVCIoC.xml" />
     <Content Include="Areas\Personnel\Views\Log\Index.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityRole\Index.cshtml" />
-    <Content Include="Areas\Personnel\Views\SecurityRole\Create.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityRole\Edit.cshtml" />
-    <Content Include="Areas\Personnel\Views\SecurityRole\Delete.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityRole\Details.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUserRole\Index.cshtml" />
     <Content Include="Areas\Personnel\Views\SecurityUserRole\Create.cshtml" />
@@ -151,7 +149,6 @@
     <Content Include="Areas\Permissions\Views\PersonnelAttendance\PartialAdd.cshtml" />
     <Content Include="Areas\Permissions\Views\PersonnelAttendance\PartialEdit.cshtml" />
     <Content Include="Content\controls\UploadFile\Style.css" />
-    <Content Include="Error.htm" />
     <Content Include="Scripts\DropdownList\DropDownList.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
     <Content Include="Scripts\uploadFile\uploadFile.js" />
@@ -508,7 +505,9 @@
     <Content Include="TestFile\Test.aspx" />
     <Content Include="TestFile\ViewPage1.aspx" />
     <Content Include="SystemBug.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
