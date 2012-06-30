@@ -55,21 +55,9 @@
     <Compile Include="Mapping\SystemPermissionMap.cs" />
     <Compile Include="Mapping\zMetaFormLayoutMap.cs" />
     <Compile Include="MigrationsHelp.cs" />
-    <Compile Include="Migrations\201205150335459_InitialData.cs" />
-    <Compile Include="Migrations\201205150335459_InitialData.Designer.cs">
-      <DependentUpon>201205150335459_InitialData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201206040137024_Lookup.cs" />
-    <Compile Include="Migrations\201206040137024_Lookup.Designer.cs">
-      <DependentUpon>201206040137024_Lookup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201206050731262_test.cs" />
-    <Compile Include="Migrations\201206050731262_test.Designer.cs">
-      <DependentUpon>201206050731262_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201206051022037_test1.cs" />
-    <Compile Include="Migrations\201206051022037_test1.Designer.cs">
-      <DependentUpon>201206051022037_test1.cs</DependentUpon>
+    <Compile Include="Migrations\201206300143327_InitialData.cs" />
+    <Compile Include="Migrations\201206300143327_InitialData.Designer.cs">
+      <DependentUpon>201206300143327_InitialData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

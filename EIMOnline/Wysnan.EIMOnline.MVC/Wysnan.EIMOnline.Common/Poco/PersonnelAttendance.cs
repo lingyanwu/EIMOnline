@@ -30,7 +30,7 @@ namespace Wysnan.EIMOnline.Common.Poco
 
 
         [LookupAttribute(LookupCodeEnum.UserType2)]
-        public int TestLookupID { get; set; }
+        public int? TestLookupID { get; set; }
 
         public virtual Lookup TestLookup { get; set; }
     }
