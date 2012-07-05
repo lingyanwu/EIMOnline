@@ -13,8 +13,7 @@ namespace Wysnan.EIMOnline.MVC.Controllers
 {
     public class IndexController : GeneralController
     {
-        //
-        // GET: /Index/
+        ISecurityUser SecurityUserModel { get; set; }
 
         public ActionResult Index(string id)
         {
@@ -24,16 +23,28 @@ namespace Wysnan.EIMOnline.MVC.Controllers
         [HttpPost]
         public ActionResult Login(SecurityUser user)
         {
-            if (user.UserLoginID == "admin" && user.UserLoginPwd == "admin")
+            SecurityUserModel = GlobalEntity.Instance.ApplicationContext.GetObject("SecurityUserModel") as ISecurityUser;
+            var result = SecurityUserModel.Login(user);
+
+            if (result.ResultStatus == false)
             {
-                if (SystemEntity != null)
-                {
-                    SystemEntity.CurrentSecurityUser = user;
-                    //return RedirectToRoute("Administration_default", new { controller = "SecurityUser", action = "Index" });
-                    return RedirectToAction("Index");
-                }
+                return this.Alert(result.Message);
             }
-            return this.Alert("用户名或密码错误");
+            else
+            {
+                SystemEntity.CurrentSecurityUser = user;
+                return RedirectToAction("Index");
+            }
+            //if (user.UserLoginID == "admin" && user.UserLoginPwd == "admin")
+            //{
+            //    if (SystemEntity != null)
+            //    {
+            //        SystemEntity.CurrentSecurityUser = user;
+            //        //return RedirectToRoute("Administration_default", new { controller = "SecurityUser", action = "Index" });
+            //        return RedirectToAction("Index");
+            //    }
+            //}
+            //return this.Alert("用户名或密码错误");
         }
 
         [HttpGet]

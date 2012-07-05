@@ -1,6 +1,4 @@
-﻿USE ERM_DB
-
---插入模块类型
+﻿--插入模块类型
 IF NOT EXISTS (SELECT ID FROM SystemModuleType)
 begin
 SET IDENTITY_INSERT [dbo].[SystemModuleType] ON

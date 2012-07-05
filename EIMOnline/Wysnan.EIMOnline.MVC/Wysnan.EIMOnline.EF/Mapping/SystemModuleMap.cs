@@ -22,7 +22,6 @@ namespace Wysnan.EIMOnline.EF.Mapping
             this.HasOptional(t => t.ModuleType)
                 .WithMany(s => s.SystemModules)
                 .HasForeignKey(o => o.ModuleTypeId);
-
         }
     }
 }

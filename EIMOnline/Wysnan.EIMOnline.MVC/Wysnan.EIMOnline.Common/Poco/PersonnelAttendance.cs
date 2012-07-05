@@ -22,6 +22,7 @@ namespace Wysnan.EIMOnline.Common.Poco
 
         public DateTime BeginWorkTime { get; set; }
 
+        [Display(Name="结束日期")]
         public DateTime EndWorkTime { get; set; }
 
         public virtual SecurityUser SecurityUser { get; set; }

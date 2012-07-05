@@ -38,34 +38,34 @@ namespace Wysnan.EIMOnline.Business
         {
             return Model.Add<T>(t);
         }
-        public Result Update(T t)
+        public virtual Result Update(T t)
         {
             return Model.Update(t);
         }
 
         #region Delete
 
-        public Result Delete(T t)
+        public virtual Result Delete(T t)
         {
             return Model.Delete(t);
         }
 
-        public Result Delete(int id)
+        public virtual Result Delete(int id)
         {
             return Model.Delete<T>(id);
         }
 
-        public Result LogicDelete(T t)
+        public virtual Result LogicDelete(T t)
         {
             return Model.LogicDelete(t);
         }
 
-        public Result LogicDelete(int id)
+        public virtual Result LogicDelete(int id)
         {
             return Model.LogicDelete<T>(id);
         }
 
-        public Result Undelete(int id)
+        public virtual Result Undelete(int id)
         {
             return Model.Undelete<T>(id);
         }
@@ -85,7 +85,7 @@ namespace Wysnan.EIMOnline.Business
             return query;
         }
 
-        public IQueryable<T> List(PageInfo page)
+        public virtual IQueryable<T> List(PageInfo page)
         {
             throw new NotImplementedException();
         }
@@ -95,12 +95,12 @@ namespace Wysnan.EIMOnline.Business
             return Model.List<T>().Where(a => a.SystemStatus.HasValue && a.SystemStatus == (int)SystemStatus.Active).ToList();
         }
 
-        public T Get(int id)
+        public virtual T Get(int id)
         {
             return Model.Get<T>(id);
         }
 
-        public T Get(string key, string value)
+        public virtual T Get(string key, string value)
         {
             throw new NotImplementedException();
         }

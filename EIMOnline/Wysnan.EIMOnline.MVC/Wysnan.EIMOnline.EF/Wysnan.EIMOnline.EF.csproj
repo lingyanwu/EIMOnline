@@ -55,9 +55,9 @@
     <Compile Include="Mapping\SystemPermissionMap.cs" />
     <Compile Include="Mapping\zMetaFormLayoutMap.cs" />
     <Compile Include="MigrationsHelp.cs" />
-    <Compile Include="Migrations\201206300143327_InitialData.cs" />
-    <Compile Include="Migrations\201206300143327_InitialData.Designer.cs">
-      <DependentUpon>201206300143327_InitialData.cs</DependentUpon>
+    <Compile Include="Migrations\201207050737296_InitialData.cs" />
+    <Compile Include="Migrations\201207050737296_InitialData.Designer.cs">
+      <DependentUpon>201207050737296_InitialData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

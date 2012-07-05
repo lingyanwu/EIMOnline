@@ -234,42 +234,28 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
 
         public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int?>> expression)
         {
-            Type t = typeof(T);
-            string field = expression.Lamda();
-            PropertyInfo propertyInfo = t.GetProperty(field);
-            if (propertyInfo != null)
-            {
-                foreach (Attribute attr in propertyInfo.GetCustomAttributes(true))
-                {
-                    LookupAttribute lookupAttribute = attr as LookupAttribute;
-                    if (null != lookupAttribute)
-                    {
-                        List<Lookup> lookups = GlobalEntity.Instance.Cache_Lookup.LookupDictionary[lookupAttribute.LookupCode];
-                        if (lookups != null)
-                        {
-                            StringBuilder html = new StringBuilder();
-                            string id = "DropDownList_" + field;
-                            html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
-                            html.Append("<div class=\"ui-widget\">");
-                            html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
-                            foreach (var item in lookups)
-                            {
-                                html.AppendFormat("<option value=\"{0}\">{1}</option>", item.ID, item.Name);
-                            }
-                            html.Append("</select>");
-                            html.Append("</div>");
-                            return MvcHtmlString.Create(html.ToString());
-                        }
-                    }
-                }
-            }
-            return MvcHtmlString.Empty;
+            return DropdownList(helper, typeof(T), expression.Lamda());
         }
-
         public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression)
         {
-            Type t = typeof(T);
-            string field = expression.Lamda();
+
+            return DropdownList(helper, typeof(T), expression.Lamda());
+
+        }
+        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression, string fullClassName)
+        {
+            object obj = Assembly.Load("Common").CreateInstance(fullClassName);
+            if (obj == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+            return DropdownList(helper, obj.GetType(), expression.Lamda());
+        }
+        private static MvcHtmlString DropdownList(HtmlHelper helper, Type t, string field)
+        {
+            string name = string.Empty;
+            name = field;
+            field = field.Substring(field.LastIndexOf('.') + 1);
             PropertyInfo propertyInfo = t.GetProperty(field);
             if (propertyInfo != null)
             {
@@ -278,6 +264,25 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
                     LookupAttribute lookupAttribute = attr as LookupAttribute;
                     if (null != lookupAttribute)
                     {
+                        //值
+                        string value = string.Empty;
+                        if (helper.ViewData != null)
+                        {
+                            var model = helper.ViewData.ModelMetadata;
+                            if (model != null)
+                            {
+                                var property = model.Properties.FirstOrDefault(c => c.PropertyName == field);
+                                if (property != null)
+                                {
+                                    var tempValue = property.Model;
+                                    if (tempValue != null)
+                                    {
+                                        value = tempValue.ToString();
+                                    }
+                                }
+                            }
+                        }
+
                         if (GlobalEntity.Instance.Cache_Lookup.LookupDictionary.ContainsKey(lookupAttribute.LookupCode))
                         {
                             List<Lookup> lookups = GlobalEntity.Instance.Cache_Lookup.LookupDictionary[lookupAttribute.LookupCode];
@@ -285,25 +290,28 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
                             {
                                 StringBuilder html = new StringBuilder();
                                 string id = "DropDownList_" + field;
-                                html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
-                                html.Append("<div class=\"ui-widget\">");
-                                html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
+                                html.AppendFormat("<script>$(document).ready(function () {{ $(function () {{$(\"#{0}\").combobox();}});}});</script>", id);
+                                html.Append("<div class=\"ui-widget\">"); html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, name);
                                 foreach (var item in lookups)
                                 {
-                                    html.AppendFormat("<option value=\"{0}\">{1}</option>", item.ID, item.Name);
+                                    if (string.IsNullOrEmpty(value) == false && item.ID.ToString() == value)
+                                    {
+                                        html.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", item.ID, item.Name);
+                                    }
+                                    else
+                                    {
+                                        html.AppendFormat("<option value=\"{0}\">{1}</option>", item.ID, item.Name);
+                                    }
                                 }
-                                html.Append("</select>");
-                                html.Append("</div>");
+                                html.Append("</select>"); html.Append("</div>");
                                 return MvcHtmlString.Create(html.ToString());
                             }
                         }
                         else
                         {
                             StringBuilder html = new StringBuilder();
-                            string id = "DropDownList_" + field;
-                            html.AppendFormat("<script>$(function () {{$(\"#{0}\").combobox();}});</script>", id);
-                            html.Append("<div class=\"ui-widget\">");
-                            html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, field);
+                            string id = "DropDownList_" + field; html.AppendFormat("<script>$(document).ready(function () {{ $(function () {{$(\"#{0}\").combobox();}});}});</script>", id);
+                            html.Append("<div class=\"ui-widget\">"); html.AppendFormat("<select id=\"{0}\" name=\"{1}\">", id, name);
                             html.Append("</select>");
                             html.Append("</div>");
                             return MvcHtmlString.Create(html.ToString());
@@ -315,7 +323,6 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
         }
 
         #endregion
-
 
         #region 测试，不缓存
         public delegate MvcHtmlString MvcCacheCallback(HttpContextBase context);

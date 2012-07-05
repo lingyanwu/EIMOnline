@@ -12,6 +12,7 @@ using Wysnan.EIMOnline.Common.ViewModel;
 using System.Linq.Expressions;
 using Wysnan.EIMOnline.Tool.Extensions;
 using Wysnan.EIMOnline.Injection.Logs;
+using Wysnan.EIMOnline.Business.Framework;
 
 namespace Wysnan.EIMOnline.Business
 {
@@ -27,13 +28,25 @@ namespace Wysnan.EIMOnline.Business
             return base.List();
         }
 
-        //[OperateLog]
-        //public override IQueryable ListJqGrid()
-        //{
-        //    var query = Model.List<SecurityUser>();
-        //     //query = query.Where(a => a.CreatedOn ==(DateTime.Now) );
-        //    var temp = query.Select("New(ID, UserName,UserLoginID,UserLoginPwd,CreatedOn)");
-        //    return temp;
-        //}
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Result Login(SecurityUser user)
+        {
+            Result r = new Result();
+            if (user == null)
+            {
+                r.Message = GlobalEntity.Instance.Cache_Message.GetMessge("1");
+            }
+            var entity = List().Where(a => a.UserLoginID.Equals(user.UserLoginID, StringComparison.CurrentCultureIgnoreCase) &&
+                a.UserLoginPwd.Equals(user.UserLoginPwd, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (entity == null)
+            {
+                r.Message = GlobalEntity.Instance.Cache_Message.GetMessge("7");
+            }
+            return r;
+        }
     }
 }

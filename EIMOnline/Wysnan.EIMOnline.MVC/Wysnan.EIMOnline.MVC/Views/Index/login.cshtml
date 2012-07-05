@@ -4,7 +4,7 @@
 }
 @using Wysnan.EIMOnline.Common.Poco
 @model Wysnan.EIMOnline.Common.Poco.SecurityUser
-@using (Html.BeginForm("index"))
+@using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId="alert"}))
 {
  
     <fieldset>
@@ -21,10 +21,11 @@
                 <td>@Html.LabelFor(a => a.UserLoginPwd)
                 </td>
                 <td>
-                    @Html.TextBox("UserLoginPwd","admin" ) @Html.ValidationMessageFor(a => a.UserLoginPwd)
+                    @Html.TextBox("UserLoginPwd", "admin") @Html.ValidationMessageFor(a => a.UserLoginPwd)
                 </td>
             </tr>
         </table>
         <input type="submit" value="登录" />
     </fieldset>  
 }
+<div id="alert"></div>

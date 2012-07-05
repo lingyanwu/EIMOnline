@@ -1,7 +1,7 @@
 namespace Wysnan.EIMOnline.EF.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitialData : DbMigration
     {
         public override void Up()
@@ -17,12 +17,9 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         UserLoginID = c.String(),
                         UserLoginPwd = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
-                        TestLookupID = c.Int(),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("zMetaLookup", t => t.TestLookupID)
-                .Index(t => t.TestLookupID);
-            
+                .PrimaryKey(t => t.ID);
+
             CreateTable(
                 "OperateLog",
                 c => new
@@ -37,7 +34,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserId)
                 .Index(t => t.SecurityUserId);
-            
+
             CreateTable(
                 "SecurityUserRole",
                 c => new
@@ -53,7 +50,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("SecurityRole", t => t.SecurityRoleID)
                 .Index(t => t.SecurityUserID)
                 .Index(t => t.SecurityRoleID);
-            
+
             CreateTable(
                 "SecurityRole",
                 c => new
@@ -64,7 +61,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         RoleName = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "SystemPermission",
                 c => new
@@ -86,7 +83,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .Index(t => t.SystemModuleTypeID)
                 .Index(t => t.SystemModulDatailPageID)
                 .Index(t => t.RoleID);
-            
+
             CreateTable(
                 "SystemModule",
                 c => new
@@ -107,7 +104,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("SystemModule", t => t.ParentSystemModuleID)
                 .Index(t => t.ModuleTypeId)
                 .Index(t => t.ParentSystemModuleID);
-            
+
             CreateTable(
                 "SystemModuleType",
                 c => new
@@ -120,7 +117,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         SortOrder = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "SystemModuleDetailPage",
                 c => new
@@ -136,7 +133,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SystemModule", t => t.SystemModuleID)
                 .Index(t => t.SystemModuleID);
-            
+
             CreateTable(
                 "PersonnelAttendance",
                 c => new
@@ -155,7 +152,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("zMetaLookup", t => t.TestLookupID)
                 .Index(t => t.SecurityUserID)
                 .Index(t => t.TestLookupID);
-            
+
             CreateTable(
                 "zMetaLookup",
                 c => new
@@ -167,7 +164,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         Code = c.String(maxLength: 20),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "zMetaFormLayout",
                 c => new
@@ -191,7 +188,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
             Sql("Exec Proc_InitialView 'SecurityUser'");
             Sql("Exec Proc_InitialView 'PersonnelAttendance'");
         }
-        
+
         public override void Down()
         {
             DropIndex("PersonnelAttendance", new[] { "TestLookupID" });
@@ -206,7 +203,6 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropIndex("SecurityUserRole", new[] { "SecurityRoleID" });
             DropIndex("SecurityUserRole", new[] { "SecurityUserID" });
             DropIndex("OperateLog", new[] { "SecurityUserId" });
-            DropIndex("SecurityUser", new[] { "TestLookupID" });
             DropForeignKey("PersonnelAttendance", "TestLookupID", "zMetaLookup");
             DropForeignKey("PersonnelAttendance", "SecurityUserID", "SecurityUser");
             DropForeignKey("SystemModuleDetailPage", "SystemModuleID", "SystemModule");
@@ -219,7 +215,6 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropForeignKey("SecurityUserRole", "SecurityRoleID", "SecurityRole");
             DropForeignKey("SecurityUserRole", "SecurityUserID", "SecurityUser");
             DropForeignKey("OperateLog", "SecurityUserId", "SecurityUser");
-            DropForeignKey("SecurityUser", "TestLookupID", "zMetaLookup");
             DropTable("zMetaFormLayout");
             DropTable("zMetaLookup");
             DropTable("PersonnelAttendance");
