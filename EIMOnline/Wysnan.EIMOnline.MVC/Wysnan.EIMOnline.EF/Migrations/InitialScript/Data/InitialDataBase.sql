@@ -25,8 +25,9 @@ END
 IF NOT EXISTS (SELECT ID FROM [SecurityUser])
 begin
 SET IDENTITY_INSERT [dbo].[SecurityUser] ON
-INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (1, 0, N'zhangsan', N'admin', N'admin', CAST(0x0000A03700000000 AS DateTime))
-INSERT [dbo].[SecurityUser] ([ID], [SystemStatus], [UserName], [UserLoginID], [UserLoginPwd], [CreatedOn]) VALUES (2, 0, N'zhangsan2', N'admin2', N'admin2', CAST(0x0000A03700000000 AS DateTime))
+INSERT  INTO SecurityUser
+( ID ,SystemStatus ,CreatedOn ,ModifiedOn ,Code ,UserName ,UserNameEn ,UserLoginID ,UserLoginPwd ,Sex ,Country ,Birthplace ,Birthday ,CertificateNo ,Phone ,Email ,UrgentName ,UrgentPhone ,Mobile ,MarriageStatusID ,HomeAddress ,CultureStatusID ,EducationalInstitute ,Professional ,GraduationTime ,StaffCategoryID ,Resume ,StatusID ,VacationDays ,RemainingVacationDays)
+VALUES  ( 1 ,0 ,GETDATE() ,GETDATE() ,'USER000001' ,N'管理员' ,'admin' ,'admin' ,'admin' ,9 ,N'中国' ,N'中国' ,GETDATE() ,'1234567890' ,'88763616' ,'shuangqi.wu@wysnan.com' ,N'武双琦' ,'13474137783' ,'13474137783' ,7 ,N'西安' ,1 ,N'西安航专' ,N'电子信息工程' ,GETDATE() ,11 ,NULL ,13 ,10 ,10)
 SET IDENTITY_INSERT [dbo].[SecurityUser] OFF
 END
 

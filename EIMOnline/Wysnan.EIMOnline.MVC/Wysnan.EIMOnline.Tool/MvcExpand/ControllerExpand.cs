@@ -8,11 +8,13 @@ namespace Wysnan.EIMOnline.Tool.MvcExpand
 {
     public static class ControllerExpand
     {
+        #region Alert
+
         public static ActionResult Alert(this Controller controller, string message, string script = null, MessageType messageType = MessageType.Ok)
         {
-            string str=Alert(message, null, null, script, messageType);
-            JavaScriptResult result = new JavaScriptResult();
-            result.Script = str;
+            string str = Alert(message, null, null, script, messageType);
+            ContentResult result = new ContentResult();
+            result.Content = str;
             return result;
         }
 
@@ -49,6 +51,27 @@ namespace Wysnan.EIMOnline.Tool.MvcExpand
             messageStr.Append("</div>");
             return messageStr.ToString();
         }
+
+        #endregion
+
+        #region Redirect
+
+        public static ActionResult RedirectUrl(this Controller controller, string actionName, string controllerName = null, string area = null)
+        {
+            if (area == null)
+            {
+                area = controller.RouteData.Values["area"] as string;
+            }
+            if (controllerName == null)
+            {
+                controllerName = controller.RouteData.Values["controller"] as string;
+            }
+            string url = (area == null ? "" : "/" + area) + string.Format("/{0}/{1}", controllerName, actionName);
+            string javascript = string.Format("window.location.href='{0}'", url);
+            return new JavaScriptResult() { Script = javascript };
+        }
+
+        #endregion
     }
 
     public class Message

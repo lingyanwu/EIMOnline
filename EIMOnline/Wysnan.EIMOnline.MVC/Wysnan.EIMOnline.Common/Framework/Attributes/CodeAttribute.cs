@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Wysnan.EIMOnline.Common.Enum;
 
 namespace Wysnan.EIMOnline.Common.Framework.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class LookupAttribute : Attribute
+    public class CodeAttribute : Attribute
     {
-        public LookupCodeEnum LookupCode { get; set; }
-        public LookupAttribute(LookupCodeEnum lookupCode)
+        private string prefix { get; set; }
+
+        public CodeAttribute(string prefix)
         {
-            this.LookupCode = lookupCode;
+            this.prefix = prefix;
         }
     }
 }

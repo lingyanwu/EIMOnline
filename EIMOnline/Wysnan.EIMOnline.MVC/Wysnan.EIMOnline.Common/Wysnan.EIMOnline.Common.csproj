@@ -45,10 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\EnumCultureStatus.cs" />
+    <Compile Include="Enum\EnumMarriageStatus.cs" />
+    <Compile Include="Enum\EnumSex.cs" />
+    <Compile Include="Enum\EnumStaffCategory.cs" />
+    <Compile Include="Enum\EnumStatus.cs" />
+    <Compile Include="Framework\Attributes\CodeAttribute.cs" />
     <Compile Include="Framework\Attributes\LookupAttribute.cs" />
     <Compile Include="Framework\ConstEntity.cs" />
     <Compile Include="Framework\Enum\GridEnum.cs" />
-    <Compile Include="Framework\Enum\LookupEnum.cs" />
+    <Compile Include="Enum\LookupCodeEnum.cs" />
     <Compile Include="Framework\Grid\Enum\GridColumnEdittype.cs" />
     <Compile Include="Framework\Grid\Enum\GridColumnSorttype.cs" />
     <Compile Include="Framework\Grid\Enum\GridColumnAlign.cs" />
@@ -68,6 +74,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Poco\IModificationTrackableEntity.cs" />
+    <Compile Include="Poco\Country.cs" />
     <Compile Include="Poco\OperateLog.cs" />
     <Compile Include="Poco\PersonnelAttendance.cs" />
     <Compile Include="Poco\SecurityRole.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Wysnan.EIMOnline.Common.Framework.Attributes;
-using Wysnan.EIMOnline.Common.Framework.Enum;
+using Wysnan.EIMOnline.Common.Enum;
 
 namespace Wysnan.EIMOnline.Common.Poco
 {
@@ -29,10 +29,5 @@ namespace Wysnan.EIMOnline.Common.Poco
 
         public bool IsPunchCard { get; set; }
 
-
-        [LookupAttribute(LookupCodeEnum.UserType2)]
-        public int? TestLookupID { get; set; }
-
-        public virtual Lookup TestLookup { get; set; }
     }
 }

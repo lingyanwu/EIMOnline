@@ -1,7 +1,9 @@
-namespace Wysnan.EIMOnline.EF.Migrations
+﻿namespace Wysnan.EIMOnline.EF.Migrations
 {
     using System.Data.Entity.Migrations;
-
+    using Wysnan.EIMOnline.Common.Poco;
+    using Wysnan.EIMOnline.Common.Enum;
+    
     public partial class InitialData : DbMigration
     {
         public override void Up()
@@ -13,13 +15,66 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Byte(),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        UserName = c.String(),
-                        UserLoginID = c.String(),
-                        UserLoginPwd = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
+                        CreatedByUserID = c.Int(),
+                        ModifiedByUserID = c.Int(),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        Code = c.String(nullable: false, maxLength: 10, unicode: false),
+                        UserName = c.String(nullable: false, maxLength: 10),
+                        UserNameEn = c.String(maxLength: 15),
+                        UserLoginID = c.String(nullable: false, maxLength: 15, unicode: false),
+                        UserLoginPwd = c.String(nullable: false, maxLength: 15),
+                        Sex = c.Int(nullable: false),
+                        Country = c.String(nullable: false, maxLength: 20),
+                        Birthplace = c.String(nullable: false, maxLength: 30),
+                        Birthday = c.DateTime(nullable: false),
+                        CertificateNo = c.String(nullable: false, maxLength: 30, unicode: false),
+                        Phone = c.String(nullable: false, maxLength: 15, unicode: false),
+                        Email = c.String(nullable: false, maxLength: 30, unicode: false),
+                        UrgentName = c.String(nullable: false, maxLength: 20),
+                        UrgentPhone = c.String(nullable: false, maxLength: 20, unicode: false),
+                        Mobile = c.String(nullable: false, maxLength: 20, unicode: false),
+                        MarriageStatusID = c.Int(nullable: false),
+                        HomeAddress = c.String(maxLength: 50),
+                        CultureStatusID = c.Int(nullable: false),
+                        EducationalInstitute = c.String(maxLength: 25),
+                        Professional = c.String(maxLength: 25),
+                        GraduationTime = c.DateTime(),
+                        StaffCategoryID = c.Int(nullable: false),
+                        Resume = c.String(maxLength: 400),
+                        StatusID = c.Int(nullable: false),
+                        VacationDays = c.Int(nullable: false),
+                        RemainingVacationDays = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("SecurityUser", t => t.CreatedByUserID)
+                .ForeignKey("SecurityUser", t => t.ModifiedByUserID)
+                .ForeignKey("zMetaLookup", t => t.Sex)
+                .ForeignKey("zMetaLookup", t => t.MarriageStatusID)
+                .ForeignKey("zMetaLookup", t => t.CultureStatusID)
+                .ForeignKey("zMetaLookup", t => t.StaffCategoryID)
+                .ForeignKey("zMetaLookup", t => t.StatusID)
+                .Index(t => t.CreatedByUserID)
+                .Index(t => t.ModifiedByUserID)
+                .Index(t => t.Sex)
+                .Index(t => t.MarriageStatusID)
+                .Index(t => t.CultureStatusID)
+                .Index(t => t.StaffCategoryID)
+                .Index(t => t.StatusID);
+            
+            CreateTable(
+                "zMetaLookup",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Byte(),
+                        TimeStamp = c.Binary(),
+                        Name = c.String(maxLength: 30),
+                        Code = c.String(maxLength: 30),
+                        EnumCode = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
-
+            
             CreateTable(
                 "OperateLog",
                 c => new
@@ -34,7 +89,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserId)
                 .Index(t => t.SecurityUserId);
-
+            
             CreateTable(
                 "SecurityUserRole",
                 c => new
@@ -50,7 +105,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("SecurityRole", t => t.SecurityRoleID)
                 .Index(t => t.SecurityUserID)
                 .Index(t => t.SecurityRoleID);
-
+            
             CreateTable(
                 "SecurityRole",
                 c => new
@@ -61,7 +116,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         RoleName = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
-
+            
             CreateTable(
                 "SystemPermission",
                 c => new
@@ -83,7 +138,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .Index(t => t.SystemModuleTypeID)
                 .Index(t => t.SystemModulDatailPageID)
                 .Index(t => t.RoleID);
-
+            
             CreateTable(
                 "SystemModule",
                 c => new
@@ -104,7 +159,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .ForeignKey("SystemModule", t => t.ParentSystemModuleID)
                 .Index(t => t.ModuleTypeId)
                 .Index(t => t.ParentSystemModuleID);
-
+            
             CreateTable(
                 "SystemModuleType",
                 c => new
@@ -117,7 +172,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         SortOrder = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
-
+            
             CreateTable(
                 "SystemModuleDetailPage",
                 c => new
@@ -133,7 +188,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SystemModule", t => t.SystemModuleID)
                 .Index(t => t.SystemModuleID);
-
+            
             CreateTable(
                 "PersonnelAttendance",
                 c => new
@@ -145,26 +200,11 @@ namespace Wysnan.EIMOnline.EF.Migrations
                         BeginWorkTime = c.DateTime(nullable: false),
                         EndWorkTime = c.DateTime(nullable: false),
                         IsPunchCard = c.Boolean(nullable: false),
-                        TestLookupID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("SecurityUser", t => t.SecurityUserID)
-                .ForeignKey("zMetaLookup", t => t.TestLookupID)
-                .Index(t => t.SecurityUserID)
-                .Index(t => t.TestLookupID);
-
-            CreateTable(
-                "zMetaLookup",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Byte(),
-                        TimeStamp = c.Binary(),
-                        Name = c.String(maxLength: 20),
-                        Code = c.String(maxLength: 20),
-                    })
-                .PrimaryKey(t => t.ID);
-
+                .Index(t => t.SecurityUserID);
+            
             CreateTable(
                 "zMetaFormLayout",
                 c => new
@@ -184,15 +224,33 @@ namespace Wysnan.EIMOnline.EF.Migrations
                     })
                 .PrimaryKey(t => t.ID);
 
-            //MigrationsHelp.InitDB(Sql);
-            //Sql("Exec Proc_InitialView 'SecurityUser'");
-            //Sql("Exec Proc_InitialView 'PersonnelAttendance'");
+            MigrationsHelp.AddLookUp(Sql,
+                new Lookup("大专", Common.Enum.LookupCodeEnum.EnumCultureStatus, EnumCultureStatus.College),
+                new Lookup("本科", Common.Enum.LookupCodeEnum.EnumCultureStatus, EnumCultureStatus.Undergraduate),
+                new Lookup("硕士", Common.Enum.LookupCodeEnum.EnumCultureStatus, EnumCultureStatus.Master),
+                new Lookup("博士", Common.Enum.LookupCodeEnum.EnumCultureStatus, EnumCultureStatus.Doctor),
 
+                new Lookup("保密", Common.Enum.LookupCodeEnum.EnumMarriageStatus, EnumMarriageStatus.None),
+                new Lookup("已婚", Common.Enum.LookupCodeEnum.EnumMarriageStatus, EnumMarriageStatus.Married),
+                new Lookup("未婚", Common.Enum.LookupCodeEnum.EnumMarriageStatus, EnumMarriageStatus.Unmarried),
+
+                new Lookup("保密", Common.Enum.LookupCodeEnum.EnumSex, EnumSex.None),
+                new Lookup("男", Common.Enum.LookupCodeEnum.EnumSex, EnumSex.Man),
+                new Lookup("女", Common.Enum.LookupCodeEnum.EnumSex, EnumSex.Woman),
+
+                new Lookup("开发者", Common.Enum.LookupCodeEnum.EnumStaffCategory, EnumStaffCategory.Developer),
+                new Lookup("管理者", Common.Enum.LookupCodeEnum.EnumStaffCategory, EnumStaffCategory.Manager),
+
+                new Lookup("注销", Common.Enum.LookupCodeEnum.EnumAccountStatus, EnumAccountStatus.LogOff),
+                new Lookup("未注销", Common.Enum.LookupCodeEnum.EnumAccountStatus, EnumAccountStatus.NuLogOff)
+                );
+            MigrationsHelp.InitDB(Sql);
+            Sql("Exec Proc_InitialView 'SecurityUser'");
+            Sql("Exec Proc_InitialView 'PersonnelAttendance'");
         }
-
+        
         public override void Down()
         {
-            DropIndex("PersonnelAttendance", new[] { "TestLookupID" });
             DropIndex("PersonnelAttendance", new[] { "SecurityUserID" });
             DropIndex("SystemModuleDetailPage", new[] { "SystemModuleID" });
             DropIndex("SystemModule", new[] { "ParentSystemModuleID" });
@@ -204,7 +262,13 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropIndex("SecurityUserRole", new[] { "SecurityRoleID" });
             DropIndex("SecurityUserRole", new[] { "SecurityUserID" });
             DropIndex("OperateLog", new[] { "SecurityUserId" });
-            DropForeignKey("PersonnelAttendance", "TestLookupID", "zMetaLookup");
+            DropIndex("SecurityUser", new[] { "StatusID" });
+            DropIndex("SecurityUser", new[] { "StaffCategoryID" });
+            DropIndex("SecurityUser", new[] { "CultureStatusID" });
+            DropIndex("SecurityUser", new[] { "MarriageStatusID" });
+            DropIndex("SecurityUser", new[] { "Sex" });
+            DropIndex("SecurityUser", new[] { "ModifiedByUserID" });
+            DropIndex("SecurityUser", new[] { "CreatedByUserID" });
             DropForeignKey("PersonnelAttendance", "SecurityUserID", "SecurityUser");
             DropForeignKey("SystemModuleDetailPage", "SystemModuleID", "SystemModule");
             DropForeignKey("SystemModule", "ParentSystemModuleID", "SystemModule");
@@ -216,8 +280,14 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropForeignKey("SecurityUserRole", "SecurityRoleID", "SecurityRole");
             DropForeignKey("SecurityUserRole", "SecurityUserID", "SecurityUser");
             DropForeignKey("OperateLog", "SecurityUserId", "SecurityUser");
+            DropForeignKey("SecurityUser", "StatusID", "zMetaLookup");
+            DropForeignKey("SecurityUser", "StaffCategoryID", "zMetaLookup");
+            DropForeignKey("SecurityUser", "CultureStatusID", "zMetaLookup");
+            DropForeignKey("SecurityUser", "MarriageStatusID", "zMetaLookup");
+            DropForeignKey("SecurityUser", "Sex", "zMetaLookup");
+            DropForeignKey("SecurityUser", "ModifiedByUserID", "SecurityUser");
+            DropForeignKey("SecurityUser", "CreatedByUserID", "SecurityUser");
             DropTable("zMetaFormLayout");
-            DropTable("zMetaLookup");
             DropTable("PersonnelAttendance");
             DropTable("SystemModuleDetailPage");
             DropTable("SystemModuleType");
@@ -226,6 +296,7 @@ namespace Wysnan.EIMOnline.EF.Migrations
             DropTable("SecurityRole");
             DropTable("SecurityUserRole");
             DropTable("OperateLog");
+            DropTable("zMetaLookup");
             DropTable("SecurityUser");
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Wysnan.EIMOnline.Common.Poco;
 
 namespace Wysnan.EIMOnline.EF.Migrations
 {
@@ -36,6 +37,23 @@ namespace Wysnan.EIMOnline.EF.Migrations
             //初始化测试数据
             commandText = System.IO.File.ReadAllText(System.IO.Path.Combine(migrationDir, "InitialData.sql"));
             sqlMethod(commandText);
+        }
+
+        public static void AddLookUp(SqlMethod sqlMethod,params Lookup[] lookups)
+        {
+            if (lookups != null)
+            {
+                StringBuilder sql = new StringBuilder();
+                foreach (var item in lookups)
+                {
+                    sql.AppendFormat("INSERT INTO zMetaLookup( Name, Code ,EnumCode,SystemStatus)VALUES (N'{0}','{1}','{2}',0); ", item.Name, item.Code, item.EnumCode);
+                }
+                string commandText = sql.ToString();
+                if (commandText.Length > 0)
+                {
+                    sqlMethod(commandText);
+                }
+            }
         }
     }
 }

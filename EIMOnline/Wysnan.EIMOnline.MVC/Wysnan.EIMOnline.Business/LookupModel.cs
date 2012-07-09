@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Wysnan.EIMOnline.Common.Poco;
 using Wysnan.EIMOnline.IBLL;
+using Wysnan.EIMOnline.Common.Enum;
 
 namespace Wysnan.EIMOnline.Business
 {
@@ -11,7 +12,7 @@ namespace Wysnan.EIMOnline.Business
     {
         public LookupModel() { }
 
-        public IQueryable<Lookup> Get(Common.Framework.Enum.LookupCodeEnum lookupCode)
+        public IQueryable<Lookup> Get(LookupCodeEnum lookupCode)
         {
             return null;
         }

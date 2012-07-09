@@ -7,7 +7,7 @@ using Wysnan.EIMOnline.Common.Framework;
 using Wysnan.EIMOnline.IBLL;
 using Spring.Context;
 using Spring.Context.Support;
-using Wysnan.EIMOnline.Common.Framework.Enum;
+using Wysnan.EIMOnline.Common.Enum;
 
 namespace Wysnan.EIMOnline.Business.Framework.Cache
 {
