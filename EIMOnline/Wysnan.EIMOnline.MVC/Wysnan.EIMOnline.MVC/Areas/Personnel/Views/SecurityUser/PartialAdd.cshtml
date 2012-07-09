@@ -1,59 +1,52 @@
-﻿\
-<div class="SearchableBox">
-    <div class="search_q">
-        <span class="spanQ">+</span>
-    </div>
-    <div class="search_t">
-        <input type="text" readonly="readonly" /></div>
-</div>
-<div id="dialog-modal" title="Basic modal dialog">
-    <div id="divSerach">
-    </div>
-</div>
-<style>
-    .SearchableBox
-    {
-        width: 200px;
-    }
-    .SearchableBox .search_q
-    {
-        text-align: right;
-    }
-    .SearchableBox .search_q spanQ
-    {
-        border: 1px solid Red;
-    }
-    .SearchableBox .search_t text
-    {
-        width: 100%;
-    }
+﻿@using Wysnan.EIMOnline.MVC.Framework.Extensions;
+@model Wysnan.EIMOnline.Common.Poco.SecurityUser
+@using (Html.BeginForm())
+{ 
     
-    .ui-dialog-titlebar
-    {
-        height: 18px;
-    }
-    #dialog-modal
-    {
-        font-size: 13px;
-        font-style: normal;
-        font-weight: normal;
-        padding: 0px;
-    }
-</style>
-<script language="javascript">
-    $(function () {
-        $("#dialog-modal").dialog({
-            autoOpen: false,
-            height: 500,
-            width: 800,
-            modal: true,
-            resizable: false
-        });
-    });
-    $(".spanQ").click(function () {
-        var cid = $(this).attr("cid");
-        var divSearch = "divSerach_" + cid;
-        var dialogDiv = "dialog_" + cid;
-        $(divSearch).load("http://localhost:8080/Administration/SecurityUser", function () { $(dialogDiv).dialog("open"); });
-    });
-</script>
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(a => a.UserName)
+                <div>
+                    @Html.TextBoxFor(a => a.UserName)
+                    @Html.ValidationMessageFor(a => a.UserName)
+                </div>
+            </td>
+            <td>
+                @Html.LabelFor(a => a.UserNameEn)
+                <div>
+                    @Html.TextBoxFor(a => a.UserNameEn)
+                    @Html.ValidationMessageFor(a => a.UserNameEn)
+                </div>
+            </td>
+            <td>
+                @Html.LabelFor(a => a.UserLoginID)
+                <div>
+                    @Html.TextBoxFor(a => a.UserLoginID)
+                    @Html.ValidationMessageFor(a => a.UserLoginID)
+                </div>
+            </td>
+            <td>
+                @Html.LabelFor(a => a.UserLoginPwd)
+                <div>
+                    @Html.TextBoxFor(a => a.UserLoginPwd)
+                    @Html.ValidationMessageFor(a => a.UserLoginPwd)
+                </div>
+            </td>
+            <td>
+                @Html.LabelFor(a => a.Sex)
+                <div>
+                    @Html.DropDownLookUp(a => a.Sex)
+                    @Html.ValidationMessageFor(a => a.Sex)
+                </div>
+            </td>
+            <td>
+                @Html.LabelFor(a => a.Country)
+                <div>
+                    @Html.TextBoxFor(a => a.Country)
+                    @Html.ValidationMessageFor(a => a.Country)
+                </div>
+            </td>
+        </tr>
+    </table>
+}

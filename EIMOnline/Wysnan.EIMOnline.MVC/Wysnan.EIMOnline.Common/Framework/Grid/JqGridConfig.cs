@@ -144,6 +144,7 @@ namespace Wysnan.EIMOnline.Common.Framework.Grid
                 SearchOptions searchOptions = new SearchOptions();
                 ConvertToColModel_Sopt(item.Type, searchOptions);
                 colModel.SearchOptions = searchOptions;
+                colModel.Hidden = item.Hidden;
                 models.Add(colModel);
             }
             return models;

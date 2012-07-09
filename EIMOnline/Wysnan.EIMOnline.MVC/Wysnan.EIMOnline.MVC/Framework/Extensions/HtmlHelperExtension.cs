@@ -232,26 +232,26 @@ namespace Wysnan.EIMOnline.MVC.Framework.Extensions
 
         #region 下拉框控件
 
-        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int?>> expression)
+        public static MvcHtmlString DropDownLookUp<T>(this HtmlHelper<T> helper, Expression<Func<T, int?>> expression)
         {
-            return DropdownList(helper, typeof(T), expression.Lamda());
+            return DropDownLookUp(helper, typeof(T), expression.Lamda());
         }
-        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression)
+        public static MvcHtmlString DropDownLookUp<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression)
         {
 
-            return DropdownList(helper, typeof(T), expression.Lamda());
+            return DropDownLookUp(helper, typeof(T), expression.Lamda());
 
         }
-        public static MvcHtmlString DropdownList<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression, string fullClassName)
+        public static MvcHtmlString DropDownLookUp<T>(this HtmlHelper<T> helper, Expression<Func<T, int>> expression, string fullClassName)
         {
             object obj = Assembly.Load("Common").CreateInstance(fullClassName);
             if (obj == null)
             {
                 return MvcHtmlString.Empty;
             }
-            return DropdownList(helper, obj.GetType(), expression.Lamda());
+            return DropDownLookUp(helper, obj.GetType(), expression.Lamda());
         }
-        private static MvcHtmlString DropdownList(HtmlHelper helper, Type t, string field)
+        private static MvcHtmlString DropDownLookUp(HtmlHelper helper, Type t, string field)
         {
             string name = string.Empty;
             name = field;

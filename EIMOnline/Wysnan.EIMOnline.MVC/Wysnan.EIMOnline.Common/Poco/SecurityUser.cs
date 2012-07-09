@@ -19,7 +19,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         public byte[] TimeStamp { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
+       
         public int? CreatedByUserID { get; set; }
 
         public int? ModifiedByUserID { get; set; }

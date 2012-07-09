@@ -39,23 +39,44 @@ namespace Wysnan.EIMOnline.Business
             {
                 new JqGridColumnTextBox(){
                     Label="编号",
-                    NameAndType=grid.Path(a=>a.ID)
+                    NameAndType=grid.Path(a=>a.ID),
+                    Hidden=true
                 },
                 new JqGridColumnTextBox(){
-                    Label="姓名",
+                    Label="职工编号",
+                    NameAndType=grid.Path(a=>a.Code)
+                },
+                new JqGridColumnTextBox(){
+                    Label="中文名称",
                     NameAndType=grid.Path(a=>a.UserName)
                 },
                 new JqGridColumnTextBox(){
+                    Label="英文名称",
+                    NameAndType=grid.Path(a=>a.UserNameEn)
+                },
+                new JqGridColumnTextBox(){
                     Label="账号",
-                    NameAndType=grid.Path(a=>a.UserLoginID)
+                    NameAndType=grid.Path(a=>a.UserLoginID),
                 },
                 new JqGridColumnTextBox(){
-                    Label="密码",
-                    NameAndType=grid.Path(a=>a.UserLoginPwd),
+                    Label="性别",
+                    NameAndType=grid.Path(a=>a.LookupSex.Name),
                 },
                 new JqGridColumnTextBox(){
-                    Label="创建时间",
-                    NameAndType=grid.Path(a=>a.CreatedOn),
+                    Label="国际",
+                    NameAndType=grid.Path(a=>a.Country),
+                },
+                new JqGridColumnTextBox(){
+                    Label="出生地",
+                    NameAndType=grid.Path(a=>a.Birthplace),
+                },
+                new JqGridColumnTextBox(){
+                    Label="邮箱",
+                    NameAndType=grid.Path(a=>a.Email),
+                },
+                new JqGridColumnTextBox(){
+                    Label="账号状态",
+                    NameAndType=grid.Path(a=>a.Status.Name),
                 }
             };
             grid.GridColumnCollection = columns;

@@ -78,6 +78,16 @@ namespace Wysnan.EIMOnline.Common.Framework.Grid.JqGridColumn
         /// </summary>
         public string Type { get; private set; }
 
+        private bool hidden = false;
+        /// <summary>
+        /// 隐藏
+        /// </summary>
+        public bool Hidden
+        {
+            get { return hidden; }
+            set { hidden = value; }
+        }
+
         #endregion
 
 

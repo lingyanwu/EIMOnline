@@ -15,5 +15,7 @@ namespace Wysnan.EIMOnline.Common.Framework.Grid.Interfaces
         string Name { get; }
 
         string Type { get; }
+
+        bool Hidden { get; set; }
     }
 }
