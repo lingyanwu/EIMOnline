@@ -34,7 +34,7 @@ $(document).ready(function () {
         draggable: false,
         resizable: false,
         open: function () {
-            setTimeout("$(\"#dialog_error\").dialog(\"close\")", 4000);
+            setTimeout("$(\"#dialog_error\").dialog(\"close\")", 5000);
         },
         create: function (event, ui) {
             $(".ui-dialog-titlebar").hide();

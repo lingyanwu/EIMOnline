@@ -26,6 +26,12 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
             return PartialView("PartialAdd");
         }
 
+        [HttpPost]
+        public ActionResult Add(SecurityUser user)
+        {
+            return View();
+        }
+
         public ActionResult Edit()
         {
             return PartialView("PartialEdit");

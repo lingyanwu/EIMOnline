@@ -230,6 +230,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         /// 账号状态
         /// </summary>
         [Display(Name = "账号状态")] 
+        [LookupAttribute(LookupCodeEnum.EnumAccountStatus)]
         public int StatusID { get; set; }
 
         public virtual Lookup Status { get; set; }
