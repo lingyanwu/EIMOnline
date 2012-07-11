@@ -13,6 +13,7 @@ using System.Linq.Expressions;
 using Wysnan.EIMOnline.Tool.Extensions;
 using Wysnan.EIMOnline.Injection.Logs;
 using Wysnan.EIMOnline.Business.Framework;
+using System.Web;
 
 namespace Wysnan.EIMOnline.Business
 {
@@ -46,7 +47,21 @@ namespace Wysnan.EIMOnline.Business
             {
                 r.Message = GlobalEntity.Instance.Cache_Message.GetMessge("7");
             }
+            r.ResultObject = entity;
             return r;
+        }
+
+        public override Result Add(SecurityUser t)
+        {
+            SystemEntity systemEntity = HttpContext.Current.Session[ConstEntity.Session_SystemEntity] as SystemEntity;
+            if (systemEntity != null)
+            {
+                t.CreatedByUserID = systemEntity.CurrentSecurityUser.ID;
+                t.CreatedOn = DateTime.Now;
+                t.ModifiedByUserID = systemEntity.CurrentSecurityUser.ID;
+                t.ModifiedOn = DateTime.Now;
+            }
+            return base.Add(t);
         }
     }
 }

@@ -64,6 +64,7 @@ namespace Wysnan.EIMOnline.Common.Framework
 
         }
 
+        public dynamic ResultObject { get; set; }
         #endregion
     }
 }

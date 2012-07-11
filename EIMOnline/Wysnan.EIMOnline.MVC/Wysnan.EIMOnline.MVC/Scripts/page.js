@@ -30,11 +30,12 @@ $(document).ready(function () {
         show: "blind",
         hide: "blind",
         position: ['right', 'top'],
-        height: 100,
+        height: 200,
+        width: 350,
         draggable: false,
         resizable: false,
         open: function () {
-            setTimeout("$(\"#dialog_error\").dialog(\"close\")", 5000);
+            setTimeout("$(\"#dialog_error\").html(\"\").dialog(\"close\")", 8000);
         },
         create: function (event, ui) {
             $(".ui-dialog-titlebar").hide();

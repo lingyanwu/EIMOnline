@@ -9,6 +9,11 @@ using Wysnan.EIMOnline.Common.Framework.Grid;
 using Wysnan.EIMOnline.Common.Framework.Enum;
 using Wysnan.EIMOnline.Common.ViewModel;
 using System.Linq.Expressions;
+using Wysnan.EIMOnline.Common.Framework.Attributes;
+using System.Reflection;
+using Wysnan.EIMOnline.Tool.Extensions;
+using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Wysnan.EIMOnline.Business
 {
@@ -36,6 +41,47 @@ namespace Wysnan.EIMOnline.Business
 
         public virtual Result Add(T t)
         {
+            var type = typeof(T);
+            var customAttribute = Attribute.GetCustomAttribute(type, typeof(CodeAttribute)) as CodeAttribute;
+            if (customAttribute != null)
+            {
+                var fields = customAttribute.Fields;
+                foreach (var item in fields)
+                {
+                    var oldValue = List().OrderByDescending(a => a.ID).Select("new(" + item.Key + ")").Take(1);
+                    string value = null;
+                    var p = type.GetProperty(item.Key);
+                    if (oldValue == null)
+                    {
+                        //得到属性
+                        if (p != null)
+                        {
+                            var stringLength = p.GetCustomAttributes(typeof(StringLengthAttribute), false);
+                            if (stringLength != null)
+                            {
+                                var length = stringLength.Length;
+                                if (item.Key.Length >= length)
+                                {
+                                    throw new ApplicationException("CodeAttribute中前缀字符串超过字段定义长度。");
+                                }
+                                value = item.Key.PadRight(length - item.Key.Length, '0');
+                                //var newCode = value.Substring(item.Key.Length + 1,) + 1;
+                                //value = item.Key + newCode;
+                            }
+                        }
+                    }
+                    foreach (dynamic v in oldValue)
+                    {
+                        value = v.Code;
+                        var newCode = Convert.ToInt32(value.Substring(item.Key.Length + 1)) + 1;
+                        value = item.Key + newCode;
+                    }
+                    if (p != null)
+                    {
+                        p.SetValue(t, value, null);
+                    }
+                }
+            }
             return Model.Add<T>(t);
         }
         public virtual Result Update(T t)
@@ -44,7 +90,6 @@ namespace Wysnan.EIMOnline.Business
         }
 
         #region Delete
-
         public virtual Result Delete(T t)
         {
             return Model.Delete(t);

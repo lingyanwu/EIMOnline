@@ -89,6 +89,8 @@ namespace Wysnan.EIMOnline.EF
                 modificationTrackable.ModifiedOn = DateTime.Now;
                 //Type type = entity.GetType();
                 //type.GetProperties("")
+               // CodeReviewAttribute att =
+               //(CodeReviewAttribute)Attribute.GetCustomAttribute(info, typeof(CodeReviewAttribute)); 
             }
 
             GetDbSet<TType>().Add(entity);
@@ -279,6 +281,11 @@ namespace Wysnan.EIMOnline.EF
                 result.Message = e.Message;
                 return result;
             }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                return result;
+            }
             //finally
             //{
             //    Dispose();
@@ -301,10 +308,6 @@ namespace Wysnan.EIMOnline.EF
         //{
         //    return GetAll<TType>().FirstOrDefault(o => o.ID == id);
         //}
-
         #endregion
-
-
-
     }
 }

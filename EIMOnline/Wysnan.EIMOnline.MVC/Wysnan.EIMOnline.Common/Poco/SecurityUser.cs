@@ -8,6 +8,7 @@ using Wysnan.EIMOnline.Common.Enum;
 
 namespace Wysnan.EIMOnline.Common.Poco
 {
+    [CodeAttribute("Code:USER")]
     public class SecurityUser : IBaseEntity
     {
         public int ID { get; set; }
@@ -33,10 +34,9 @@ namespace Wysnan.EIMOnline.Common.Poco
         /// <summary>
         /// 职工编号
         /// </summary>
-        [CodeAttribute("USER")]
         [StringLength(10)]
         [Display(Name = "职工编号")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string Code { get; set; }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "中文名称")]
         [StringLength(10)]
         [RegularExpression("^[a-zA-Z0-9_\u4E00-\u9FA5]*$", ErrorMessage = "只能是汉字、数字、字母、下划线")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string UserName { get; set; }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "账号")]
         [StringLength(15)]
         [RegularExpression("^[a-zA-Z0-9_]*$", ErrorMessage = "只能是数字、字母、下划线")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string UserLoginID { get; set; }
 
         /// <summary>
@@ -71,14 +71,14 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "密码")]
         [StringLength(15)]
         [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "只能是数字、字母")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string UserLoginPwd { get; set; }
 
         /// <summary>
         /// 性别
         /// </summary>
         [Display(Name = "性别")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         [LookupAttribute(LookupCodeEnum.EnumSex)]
         public int Sex { get; set; }
 
@@ -90,7 +90,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "国际")]
         [StringLength(20)]
         [RegularExpression("^[a-zA-Z0-9\u4E00-\u9FA5]*$", ErrorMessage = "只能是汉字、数字、字母")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string Country { get; set; }
 
         /// <summary>
@@ -98,14 +98,14 @@ namespace Wysnan.EIMOnline.Common.Poco
         /// </summary>
         [Display(Name = "出生地")]
         [StringLength(30)]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string Birthplace { get; set; }
 
         /// <summary>
         /// 出生年月
         /// </summary>
         [Display(Name = "出生年月")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public DateTime Birthday { get; set; }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "证件号")]
         [StringLength(30)]
         [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "只能是数字、字母")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string CertificateNo { get; set; }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "固定电话")]
         [StringLength(15)]
         [RegularExpression("^[0-9]*$", ErrorMessage = "只能是数字")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string Phone { get; set; }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "邮件地址")]
         [StringLength(30)]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入正确的邮件地址。")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string Email { get; set; }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "紧急联系人")]
         [StringLength(20)]
         [RegularExpression("^[a-zA-Z0-9\u4E00-\u9FA5]*$", ErrorMessage = "只能是汉字、数字、字母")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string UrgentName { get; set; }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Wysnan.EIMOnline.Common.Poco
         [Display(Name = "紧急联系人电话")]
         [StringLength(20)]
         [RegularExpression("^[0-9]*$", ErrorMessage = "只能是数字")]
-        [Required(ErrorMessage = "必填")]
+        [Required(ErrorMessage="{0}必填")]
         public string UrgentPhone { get; set; }
 
         /// <summary>
@@ -158,8 +158,8 @@ namespace Wysnan.EIMOnline.Common.Poco
         /// </summary>
         [Display(Name = "手机")]
         [StringLength(20)]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "只能是数字")]
-        [Required(ErrorMessage = "必填")] 
+        [RegularExpression("^[0-9]*$", ErrorMessage = "{0}只能是数字")]
+        [Required(ErrorMessage="{0}必填")] 
         public string Mobile { get; set; }
 
         /// <summary>

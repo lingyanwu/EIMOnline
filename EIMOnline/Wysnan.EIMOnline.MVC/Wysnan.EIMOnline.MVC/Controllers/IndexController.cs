@@ -32,7 +32,7 @@ namespace Wysnan.EIMOnline.MVC.Controllers
             }
             else
             {
-                SystemEntity.CurrentSecurityUser = user;
+                SystemEntity.CurrentSecurityUser = result.ResultObject;
                 return this.RedirectUrl("Index");
             }
             //if (user.UserLoginID == "admin" && user.UserLoginPwd == "admin")

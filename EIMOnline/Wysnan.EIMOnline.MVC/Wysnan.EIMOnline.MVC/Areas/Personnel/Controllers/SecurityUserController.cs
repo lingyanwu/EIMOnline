@@ -29,7 +29,8 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
         [HttpPost]
         public ActionResult Add(SecurityUser user)
         {
-            return View();
+            Model.Add(user);
+            return Index();
         }
 
         public ActionResult Edit()
