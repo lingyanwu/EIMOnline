@@ -3,22 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-
-namespace Wysnan.EIMOnline.Tool.MvcExpand
+//using System.Web.
+namespace Wysnan.EIMOnline.MVC.Tool.MvcExpand
 {
     public static class ControllerExpand
     {
         #region Alert
 
-        public static ActionResult Alert(this Controller controller, string message, string script = null, MessageType messageType = MessageType.Ok)
+        public static ActionResult Alert(this Controller controller, string message, AlertAction alertAction = AlertAction.None, MessageType messageType = MessageType.Ok, string script = null)
         {
-            string str = Alert(message, null, null, script, messageType);
+            string str = Alert(message, null, null, null, script, messageType, alertAction);
             ContentResult result = new ContentResult();
             result.Content = str;
             return result;
         }
 
-        private static string Alert(string message, string controller, string action, string script = null, MessageType messageType = MessageType.Ok)
+        public static ActionResult Alert(this Controller controller, string message, string actionName, string controllerName = null, string areaName = null, AlertAction alertAction = AlertAction.None, MessageType messageType = MessageType.Ok, string script = null)
+        {
+            if (!string.IsNullOrEmpty(actionName))
+            {
+                if (string.IsNullOrEmpty(controllerName))
+                {
+                    controllerName = controller.RouteData.Values["controller"] as string;
+                }
+                if (string.IsNullOrEmpty(areaName))
+                {
+                    areaName = controller.RouteData.Values["area"] as string;
+                }
+            }
+            string str = Alert(message, areaName, controllerName, actionName, script, messageType, alertAction);
+            ContentResult result = new ContentResult();
+            result.Content = str;
+            return result;
+        }
+
+        private static string Alert(string message, string area, string controller, string action, string script = null, MessageType messageType = MessageType.Ok, AlertAction alertAction = AlertAction.None)
         {
             StringBuilder messageStr = new StringBuilder();
             messageStr.Append("<script>");
@@ -30,7 +49,18 @@ namespace Wysnan.EIMOnline.Tool.MvcExpand
                     messageStr.Append(", buttons: {Ok: function() {");
                     if (!string.IsNullOrEmpty(controller))
                     {
-                        messageStr.AppendFormat("window.location.href=\"/{0}/{1}\";", controller, action);
+                        if (controller.IndexOf("Controller") > 0)
+                        {
+                            controller = controller.Replace("Controller", "");
+                        }
+                        if (string.IsNullOrEmpty(area))
+                        {
+                            messageStr.AppendFormat("window.location.href=\"/{0}/{1}\";", controller, action);
+                        }
+                        else
+                        {
+                            messageStr.AppendFormat("window.location.href=\"/{0}/{1}/{2}\";", area, controller, action);
+                        }
                     }
                     messageStr.Append("$(this).dialog( \"close\" );}}");
                     break;
@@ -44,6 +74,12 @@ namespace Wysnan.EIMOnline.Tool.MvcExpand
             if (!string.IsNullOrEmpty(script))
             {
                 messageStr.Append(script);
+            }
+            switch (alertAction)
+            {
+                case AlertAction.CloseCurrentWindow:
+                    messageStr.Append("GlobalObj.RemovePage(GlobalObj.currentPage)");
+                    break;
             }
             messageStr.Append("</script>");
             messageStr.Append("<div id=\"dialog-message\" title=\"提示\" style=\"display:none\">");
@@ -103,5 +139,11 @@ namespace Wysnan.EIMOnline.Tool.MvcExpand
     {
         Ok,
         YesOrNo
+    }
+
+    public enum AlertAction
+    {
+        None,
+        CloseCurrentWindow
     }
 }

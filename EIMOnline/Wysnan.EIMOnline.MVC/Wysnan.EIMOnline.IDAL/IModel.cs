@@ -32,6 +32,8 @@ namespace Wysnan.EIMOnline.IDAL
 
         Result LogicDelete<T>(int id) where T : class,IBaseEntity;
 
+        Result LogicDelete<T>(IEnumerable<int> ids) where T : class,IBaseEntity;
+
         Result Undelete<T>(int id) where T : class,IBaseEntity;
         #endregion
 

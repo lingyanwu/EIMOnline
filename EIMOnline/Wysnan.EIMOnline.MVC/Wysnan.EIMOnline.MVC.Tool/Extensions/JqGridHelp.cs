@@ -46,6 +46,7 @@ namespace Wysnan.EIMOnline.Tool.JqGridExtansions
             string urlAdd = currentModuleName + "/Add";
             string urlView = currentModuleName + "/View";
             string urlEdit = currentModuleName + "/Edit";
+            string urlDelete = currentModuleName + "/Delete";
 
             SystemModuleDetailPage detailPageView = GlobalEntity.Instance.Cache_SystemModule.GetSystemModuleDetailPage(currentModule, urlView);
             SystemModuleDetailPage detailPageEdit = GlobalEntity.Instance.Cache_SystemModule.GetSystemModuleDetailPage(currentModule, urlEdit);
@@ -123,6 +124,7 @@ namespace Wysnan.EIMOnline.Tool.JqGridExtansions
             //ui-icon-pencil
             grid.AppendFormat(".navButtonAdd('#{5}',{{buttonicon:'ui-icon-pencil',caption:'',id:'GridButtonEdit',title:'Edit Record',onClickButton:function(e){{var id=grid.getCell(grid.jqGrid('getGridParam','selarrrow'),'ID');if(id==false){{return;}} Navigation('{0}_{1}','{2}','{3}'+'/'+id,'{4}')}}}}).navSeparatorAdd('#{5}',{{}})", currentModule.ID, detailPageEdit.ID, detailPageEdit.DetailPageTitle, urlEdit, currentModule.ImageUrl, pager);
             grid.AppendFormat(".navButtonAdd('#{5}',{{buttonicon:'ui-icon-plus',caption:'',id:'GridButtonAdd',title:'Add Record',onClickButton:function(e){{Navigation('{0}_{1}','{2}','{3}','{4}')}}}}).navSeparatorAdd('#{5}',{{}})", currentModule.ID, detailPageAdd.ID, detailPageAdd.DetailPageTitle, urlAdd, currentModule.ImageUrl, pager);
+            grid.AppendFormat(".navButtonAdd('#{0}',{{buttonicon:'ui-icon-minusthick',caption:'',id:'GridButtonDelete',title:'Delete Record',onClickButton:function(e){{var ids=grid.getGridParam('selarrrow');if(ids==false){{return;}} DeleteRecord(grid,'{1}',ids)}}}}).navSeparatorAdd('#{0}',{{}})", pager, urlDelete);
             grid.AppendFormat(".navButtonAdd('#{0}',{{buttonicon:'ui-icon-calculator',caption:'',id:'GridButtonColumn',title:'Reorder Columns',onClickButton:function(e){{grid.jqGrid('columnChooser',{{ 'done': function(perm) {{ if (perm) {{ this.jqGrid('remapColumns', perm, true); persist(this);}}}}}});}}}}).navSeparatorAdd('#{0}',{{}});", pager);
             grid.Append("grid.jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});");
             //grid.Append("grid.setGridHeight('100%');");

@@ -58,5 +58,22 @@ namespace Wysnan.EIMOnline.Tool.Extensions
             return arrayString.ToString();
         }
 
+        public static IEnumerable<int> ConvertToArray(this string value, char splitChar = ',')
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                var items = value.Split(new char[] { splitChar }, StringSplitOptions.RemoveEmptyEntries);
+                if (items != null)
+                {
+                    List<int> result = new List<int>();
+                    foreach (var item in items)
+                    {
+                        result.Add(Convert.ToInt32(item));
+                    }
+                    return result;
+                }
+            }
+            return null;
+        }
     }
 }

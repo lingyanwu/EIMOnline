@@ -11,7 +11,7 @@ using Wysnan.EIMOnline.Business.Framework;
 using Wysnan.EIMOnline.Common.Framework.Enum;
 using Wysnan.EIMOnline.MVC.Framework.Extensions;
 using Wysnan.EIMOnline.Injection.JqGrid;
-using Wysnan.EIMOnline.Tool.MvcExpand;
+using Wysnan.EIMOnline.MVC.Tool.MvcExpand;
 namespace Wysnan.EIMOnline.MVC.Areas.Permissions.Controllers
 {
     public class PersonnelAttendanceController : BaseController<IPersonnelAttendanceModel, PersonnelAttendance>

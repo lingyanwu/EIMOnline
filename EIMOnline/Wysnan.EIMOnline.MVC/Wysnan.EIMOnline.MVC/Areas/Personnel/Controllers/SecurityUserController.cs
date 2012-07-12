@@ -11,6 +11,8 @@ using Wysnan.EIMOnline.Business.Framework;
 using Wysnan.EIMOnline.Common.Framework.Enum;
 using Wysnan.EIMOnline.MVC.Framework.Extensions;
 using Wysnan.EIMOnline.Injection.JqGrid;
+using Wysnan.EIMOnline.MVC.Tool.MvcExpand;
+using Wysnan.EIMOnline.Tool.Extensions;
 
 namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
 {
@@ -30,12 +32,18 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
         public ActionResult Add(SecurityUser user)
         {
             Model.Add(user);
-            return Index();
+            return this.Alert("添加成功",AlertAction.CloseCurrentWindow);
         }
 
         public ActionResult Edit()
         {
             return PartialView("PartialEdit");
+        }
+
+        public ActionResult Delete(string ids)
+        {
+            Model.LogicDelete(ids.ConvertToArray());
+            return this.Alert("删除成功。");
         }
     }
 }

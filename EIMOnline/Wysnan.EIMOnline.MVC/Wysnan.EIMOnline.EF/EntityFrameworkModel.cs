@@ -89,8 +89,8 @@ namespace Wysnan.EIMOnline.EF
                 modificationTrackable.ModifiedOn = DateTime.Now;
                 //Type type = entity.GetType();
                 //type.GetProperties("")
-               // CodeReviewAttribute att =
-               //(CodeReviewAttribute)Attribute.GetCustomAttribute(info, typeof(CodeReviewAttribute)); 
+                // CodeReviewAttribute att =
+                //(CodeReviewAttribute)Attribute.GetCustomAttribute(info, typeof(CodeReviewAttribute)); 
             }
 
             GetDbSet<TType>().Add(entity);
@@ -109,7 +109,6 @@ namespace Wysnan.EIMOnline.EF
                 result.MessageCode = "1";
                 return result;
             }
-
             var oldEntity = GetDbSet<TType>().Find(entity.ID);
             if (oldEntity == null)
             {
@@ -117,15 +116,44 @@ namespace Wysnan.EIMOnline.EF
                 result.Params = new string[] { typeof(TType).Name, entity.ID.ToString() };
                 return result;
             }
-            if (oldEntity.SystemStatus == (int)SystemStatus.Deleted)
-            {
-                result.MessageCode = "5";
-                result.Params = new string[] { typeof(TType).Name, entity.ID.ToString() };
-                return result;
-            }
             try
             {
                 DB.Entry(oldEntity).CurrentValues.SetValues(entity);
+                return SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                return result;
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public Result Update<TType>(IEnumerable<TType> entitys) where TType : class, IBaseEntity
+        {
+
+            Result result = new Result();
+            try
+            {
+                if (entitys == null)
+                {
+                    result.MessageCode = "1";
+                    return result;
+                }
+                foreach (var item in entitys)
+                {
+                    var oldEntity = GetDbSet<TType>().Find(item.ID);
+                    if (oldEntity == null)
+                    {
+                        result.MessageCode = "2";
+                        result.Params = new string[] { typeof(TType).Name, item.ID.ToString() };
+                        return result;
+                    }
+                    DB.Entry(oldEntity).CurrentValues.SetValues(item);
+                }
                 return SaveChanges();
             }
             catch (Exception ex)
@@ -173,6 +201,30 @@ namespace Wysnan.EIMOnline.EF
             }
             oldObject.SystemStatus = (byte)SystemStatus.Deleted;
             return Update(oldObject);
+        }
+
+        public Result LogicDelete<TType>(IEnumerable<int> ids) where TType : class, IBaseEntity
+        {
+            Result result = new Result();
+            if (ids == null)
+            {
+                result.MessageCode = "8";
+                result.Params = new string[] { typeof(TType).Name };
+                return result;
+            }
+            var oldObject = List<TType>().Where(a => ids.Contains(a.ID));
+            if (oldObject == null)
+            {
+                result.MessageCode = "9";
+                result.Params = new string[] { typeof(TType).Name };
+                return result;
+            }
+            var entitys = oldObject.AsEnumerable();
+            foreach (var item in entitys)
+            {
+                item.SystemStatus = (byte)SystemStatus.Deleted;
+            }
+            return Update(entitys);
         }
 
         public Result Delete<TType>(TType entity) where TType : class, IBaseEntity
@@ -309,5 +361,6 @@ namespace Wysnan.EIMOnline.EF
         //    return GetAll<TType>().FirstOrDefault(o => o.ID == id);
         //}
         #endregion
+
     }
 }

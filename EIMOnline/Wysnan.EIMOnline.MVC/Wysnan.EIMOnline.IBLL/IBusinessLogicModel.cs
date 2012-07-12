@@ -18,8 +18,10 @@ namespace Wysnan.EIMOnline.IBLL
 
         Result Delete(T t);
         Result Delete(int id);
+        
         Result LogicDelete(T t);
         Result LogicDelete(int id);
+        Result LogicDelete(IEnumerable<int> ids);
         Result Undelete(int id);
 
         IQueryable<T> List();

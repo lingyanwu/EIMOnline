@@ -42,6 +42,11 @@ $(document).ready(function () {
         }
     });
 
+    $(window).error(function (msg, url, line) {
+        $("#dialog_error").html(msg.originalEvent.message);
+        $("#dialog_error").dialog("open");
+    });
+
     //获取当前url，如果有#请求的页面，则跳转#号后地址
     var url = window.location.href;
     var length = url.indexOf("#");
@@ -65,6 +70,7 @@ function InitPage() {
 var GlobalObj =
     {
         'pages': new Array(),
+        'currentPage': null,
         'AddPage': function (obj) {
             $("#li_index").remove();
             var isExist = false;
@@ -86,9 +92,11 @@ var GlobalObj =
                 var div = "<div class=\"pageItemDiv\" id=\"item_" + obj.id + "\"><div class=\"pageItem\" onclick=\"ShowThis('" + obj.id + "','" + obj.name + "','" + obj.url + "')\">" + obj.name + "</div><div class=\"pageItemClose\" onclick=\"ItemClose('" + obj.id + "')\">×</div></div>";
                 $(".div_foot").append(div);
                 this.pages.push(obj);
+                this.currentPage = obj.id;
             } else {
                 //如果存在，显示这个页面内容
                 ShowThis(obj.id, obj.name, obj.url);
+                this.currentPage = obj.id;
             }
         },
         'RemovePage': function (id) {
@@ -108,13 +116,14 @@ var GlobalObj =
                 }
             });
             this.pages.splice(index, 1);
+            this.currentPage = null;
         }
     };
 function Page(name) {
     this.id = 0;
     this.name = name;
     this.url = null;
-    this.image = null
+    this.image = null;
 };
 
 function Navigation(id, name, url, image) {
@@ -139,9 +148,21 @@ function ShowThis(id, name, url) {
     var liId = "li_wc_" + id;
     $("li[id*='li_wc_']").hide();
     $("#" + liId).show();
+    GlobalObj.currentPage = id;
     try {
         history.pushState(null, name, url);
     } catch (e) {
 
     }
+}
+function DeleteRecord(grid, deleteUrl, rowIds) {
+    var value = "";
+    for (var i = 0; i < rowIds.length; i++) {
+        value += grid.getCell(rowIds[i], 'ID') + ",";
+    }
+    $.post(deleteUrl, { ids: value }, function (response, status, xhr) {
+        if (response && response.length != 0) {
+            $("#div_alert_content").html(response);
+        }
+    });
 }

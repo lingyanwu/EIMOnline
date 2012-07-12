@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Wysnan.EIMOnline.Common.Poco;
 using Wysnan.EIMOnline.IBLL;
-using Wysnan.EIMOnline.Tool.MvcExpand;
+using Wysnan.EIMOnline.MVC.Tool.MvcExpand;
 using Wysnan.EIMOnline.Common.Framework;
 using Wysnan.EIMOnline.Business.Framework;
 
