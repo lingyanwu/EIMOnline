@@ -62,7 +62,10 @@ namespace Wysnan.EIMOnline.MVC.Tool.MvcExpand
                             messageStr.AppendFormat("window.location.href=\"/{0}/{1}/{2}\";", area, controller, action);
                         }
                     }
-                    messageStr.Append("$(this).dialog( \"close\" );}}");
+                    messageStr.Append("$(this).dialog( \"close\" );");
+                    messageStr.Append("refresh();");
+                    messageStr.Append("}}");
+
                     break;
                 case MessageType.YesOrNo:
                     messageStr.Append(",buttons:{\"Yes\": function(){");
