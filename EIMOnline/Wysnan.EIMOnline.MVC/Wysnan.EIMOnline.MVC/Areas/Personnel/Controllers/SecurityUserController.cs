@@ -44,7 +44,7 @@ namespace Wysnan.EIMOnline.MVC.Areas.Personnel.Controllers
         [HttpPost]
         public ActionResult Edit(SecurityUser user)
         {
-            Model.Add(user);
+            Model.Update(user);
             return this.Alert("修改成功。", AlertAction.CloseCurrentWindow);
         }
 
